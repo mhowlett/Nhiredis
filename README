@@ -1,25 +1,25 @@
-<h2>Introduction</h2>
+## Introduction
 
 Nhiredis is lighweight .NET wrapper for hiredis. 
 
-<h2>Alternatives .NET Redis Clients</h2>
+## Alternatives .NET Redis Clients
 
 There are two recommended .NET redis clients on redis.io - ServiceStack.Redis and BookSleeve. 
 Why another client?
 
-<b>ServiceStack.Redis</b> - This is the client I have been successfully using for some time. 
+*ServiceStack.Redis* - This is the client I have been successfully using for some time. 
 Unfortunately WATCH functionality isn't currently supported. One option was to add support to
 this library, however there are two other things I don't like so much about this library: 
 
-<ol>
-<li>There are too many functions all in a single namespace and there isn't a clear mapping from Redis commands to the function names.</li>
-<li>Too many dependencies. I just want a lightweight redis client, nothing else.</li>
-</ol>
 
-<b>Booksleeve</b> - Haven't looked in detail, but on the surface it looks great. However,
+There are too many functions all in a single namespace and there isn't a clear mapping from Redis commands to the function names.
+Too many dependencies. I just want a lightweight redis client, nothing else.
+
+
+*Booksleeve* - Haven't looked in detail, but on the surface it looks great. However,
 for people still working with C# 3, it's not an option.
 
-<h2>Building</h2>
+## Building
 
 update the hiredis_wrapper_win32 project 'include directories' and 'additional dependencies' to
 point to the hiredis source directory and successfully built .lib.
