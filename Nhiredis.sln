@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hiredis_wrapper_win32", "hiredis_wrapper_win32\hiredis_wrapper_win32.vcproj", "{91CD4CD1-57F9-4365-928A-22CBDD7B2934}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Test", "Nhiredis_Test\Nhiredis_Test.csproj", "{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis", "Nhiredis\Nhiredis.csproj", "{7A587D10-334F-4937-85E1-8BC3C0546CD4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Debug|Win32.ActiveCfg = Debug|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Debug|Win32.Build.0 = Debug|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Release|Any CPU.ActiveCfg = Release|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Release|Win32.ActiveCfg = Release|Win32
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934}.Release|Win32.Build.0 = Release|Win32
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Debug|Win32.Build.0 = Debug|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}.Release|Win32.ActiveCfg = Release|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Debug|Win32.Build.0 = Debug|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Win32.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
