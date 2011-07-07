@@ -41,34 +41,27 @@ void n_redisCommand(
 	int i;
 	char **argv = (char **)args;
 
+	size_t* argvlen = malloc(argc * sizeof(size_t));
+	for (i=0; i<argc; ++i)
+	{
+		argvlen[i] = *((int *)argv[i]);
+		argv[i] = ((int *)argv[i]) + 1;
+	}
+
+	r = redisCommandArgv((redisContext *)context, argc, argv, argvlen);
+
+	free(argvlen);
+
 	if (argc > 0)
 	{
-		size_t* argvlen = malloc(argc * sizeof(size_t));
 		for (i=0; i<argc; ++i)
 		{
-			argvlen[i] = *((int *)argv[i]);
-			argv[i] = ((int *)argv[i]) + 1;
+			argv[i] = ((int *)argv[i]) - 1;
+			free(argv[i]);
 		}
-
-		r = redisCommandArgv((redisContext *)context, argc, argv, argvlen);
-
-		free(argvlen);
-
-		if (argc > 0)
-		{
-			for (i=0; i<argc; ++i)
-			{
-				argv[i] = ((int *)argv[i]) - 1;
-				free(argv[i]);
-			}
-			free(argv);
-		}
+		free(argv);
 	}
-	else
-	{
-		r = redisCommand((redisContext *)context, format);
-	}
-
+	
 	*type = r->type;
 	*integer = r->integer;
 	*len = r->len;

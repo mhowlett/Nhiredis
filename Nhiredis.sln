@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Test", "Nhiredis_T
 		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis", "Nhiredis\Nhiredis.csproj", "{7A587D10-334F-4937-85E1-8BC3C0546CD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis",  "Nhiredis\Nhiredis.csproj", "{7A587D10-334F-4937-85E1-8BC3C0546CD4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
 	EndProjectSection
@@ -60,3 +60,4 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
+

@@ -20,9 +20,9 @@ namespace Nhiredis
             return new RedisContext {NativeContext = Interop.n_redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
         }
 
-        public static T RedisCommand<T>(RedisContext context, string format, params object[] arguments)
+        public static T RedisCommand<T>(RedisContext context, params object[] arguments)
         {
-            object result = RedisCommandImpl(context, format, arguments, typeof(T));
+            object result = RedisCommandImpl(context, arguments, typeof(T));
             if (!(result is T))
             {
                 if (result != null)
@@ -37,14 +37,13 @@ namespace Nhiredis
 
         public static object RedisCommand(
             RedisContext context, 
-            string format, params object[] arguments)
+            params object[] arguments)
         {
-            return RedisCommandImpl(context, format, arguments, null);
+            return RedisCommandImpl(context, arguments, null);
         }
 
         private static object RedisCommandImpl(
             RedisContext context, 
-            string format,
             object[] arguments,
             Type typeHint)
         {
@@ -66,13 +65,12 @@ namespace Nhiredis
                 for (int i = 0; i < arguments.Length; ++i)
                 {
                     // currently don't support anything other than ascii string data.
-                    Interop.n_setArgument(argumentsPtr, i, (string) arguments[i]);
+                    Interop.n_setArgument(argumentsPtr, i, (string) arguments[i], ((string)arguments[i]).Length);
                 }
             }
 
             Interop.n_redisCommand(
                 context.NativeContext,
-                format,
                 argumentsPtr,
                 arguments.Length,
                 out type,

@@ -19,7 +19,6 @@ namespace Nhiredis
             [DllImport("hiredis_wrapper_win32.dll")]
             public static extern void n_redisCommand(
                 IntPtr redisContext, 
-                [MarshalAs(UnmanagedType.LPStr)] string format,
                 IntPtr args,
                 int argsc,
                 out int type, 
@@ -71,7 +70,8 @@ namespace Nhiredis
             public static extern void n_setArgument(
                 IntPtr arguments,
                 int index,
-                [MarshalAs(UnmanagedType.LPStr)] string argument);
+                [MarshalAs(UnmanagedType.LPStr)] string argument,
+                int len);
 
         }
     }

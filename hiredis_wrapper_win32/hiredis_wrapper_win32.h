@@ -21,16 +21,16 @@ void *n_redisConnectWithTimeout(
 
 HIREDIS_WRAPPER_WIN32_API
 void n_redisCommand(
-		void *context,			// in:  the redisContext to use to execute the command.
-		void *args,				// in:  arguments of command.
-		int argsc,				// in:  number of arguments.
-		int *type,				// out: the type of result.
-		long long *integer,		// out: if result is integer, the result.
-		char *strBuf,			// out: if result is string, the result is coppied to this buffer if it is less than strBufLen-1.
-		int strBufLen,  		// in:  the size of strBuf.
-		int *len,				// out: the length of the string in strBuf, or pointed to by reply.
-		int *elements,			// out: number of elements in a multi-reply. If > 0, reply is a pointer to the reply, and ... method should be used to get array and free the reply.
-		void **reply			// out: if !NULL, the reply from redisCommand, which is yet to be freed.
+		void *context,
+		void *args,
+		int argsc,
+		int *type,
+		long long *integer,
+		char *strBuf,
+		int strBufLen,
+		int *len,
+		int *elements,
+		void **reply
 );
 
 HIREDIS_WRAPPER_WIN32_API
