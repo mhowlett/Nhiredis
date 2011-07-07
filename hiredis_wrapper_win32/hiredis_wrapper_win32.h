@@ -96,7 +96,7 @@ void n_setupArgumentArray(
 );
 
 HIREDIS_WRAPPER_WIN32_API
-void n_setArgument(
+void n_setStringArgument(
    char *arguments,
    int index,
    char *argument,

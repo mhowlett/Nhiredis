@@ -73,8 +73,7 @@ namespace Nhiredis
             object[] arguments,
             Type typeHint)
         {
-            const int defaultMaxStrLen = 64;
-            int currentSbLen = defaultMaxStrLen;
+            int currentSbLen = 64;
 
             int type;
             long integer;
