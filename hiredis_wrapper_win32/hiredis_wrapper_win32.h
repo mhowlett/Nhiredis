@@ -22,7 +22,6 @@ void *n_redisConnectWithTimeout(
 HIREDIS_WRAPPER_WIN32_API
 void n_redisCommand(
 		void *context,			// in:  the redisContext to use to execute the command.
-		char *format,			// in:  the command to execute.
 		void *args,				// in:  arguments of command.
 		int argsc,				// in:  number of arguments.
 		int *type,				// out: the type of result.
@@ -74,5 +73,6 @@ HIREDIS_WRAPPER_WIN32_API
 void n_setArgument(
    char *arguments,
    int index,
-   char *argument
+   char *argument,
+   int len
 );

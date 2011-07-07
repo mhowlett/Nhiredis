@@ -25,7 +25,6 @@ void *n_redisConnectWithTimeout(
 HIREDIS_WRAPPER_WIN32_API
 void n_redisCommand(
 		void *context,			// in:  the redisContext to use to execute the command.
-		char *arg,				// in:  the command (and parameters) to execute.
 		void *args,				// in:  arguments of command.
 		int argc,				// in:  number of arguments.
 		int *type,				// out: the type of result.
