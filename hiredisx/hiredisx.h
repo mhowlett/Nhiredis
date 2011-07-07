@@ -30,14 +30,14 @@
 // that uses this DLL. This way any other project whose source files include this file see 
 // NHIREDIS_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
-#ifdef HIREDIS_WRAPPER_WIN32_EXPORTS
-#define HIREDIS_WRAPPER_WIN32_API __declspec(dllexport)
+#ifdef HIREDISX_EXPORTS
+#define HIREDISX_API __declspec(dllexport)
 #else
-#define HIREDIS_WRAPPER_WIN32_API __declspec(dllimport)
+#define HIREDISX_API __declspec(dllimport)
 #endif
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void *n_redisConnectWithTimeout(
 		const char *ip, 
 		int port, 
@@ -45,7 +45,7 @@ void *n_redisConnectWithTimeout(
 		int timeout_microseconds
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_redisCommand(
 		void *context,
 		void *args,
@@ -59,7 +59,7 @@ void n_redisCommand(
 		void **reply
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveElement(
 	void *reply, 
 	int index, 
@@ -71,31 +71,31 @@ void n_retrieveElement(
 	char **strPtr
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_freeReplyObject(
 	void *reply
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveStringAndFreeReplyObject(
 	void *reply, 
 	char *toStrPtr
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveElementString(
 	void *reply,
 	int index,
 	char *toStrPtr
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_setupArgumentArray(
 	int length,
 	char **arguments
 );
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_setStringArgument(
    char *arguments,
    int index,

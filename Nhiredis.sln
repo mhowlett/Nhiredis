@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hiredis_wrapper_win32", "hiredis_wrapper_win32\hiredis_wrapper_win32.vcproj", "{91CD4CD1-57F9-4365-928A-22CBDD7B2934}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hiredisx", "hiredisx\hiredisx.vcproj", "{91CD4CD1-57F9-4365-928A-22CBDD7B2934}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Test", "Nhiredis_Test\Nhiredis_Test.csproj", "{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}"
 	ProjectSection(ProjectDependencies) = postProject

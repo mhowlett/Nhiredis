@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="hiredis_wrapper_win32"
+	Name="hiredisx"
 	ProjectGUID="{91CD4CD1-57F9-4365-928A-22CBDD7B2934}"
 	RootNamespace="hiredis_wrapper_win32"
 	Keyword="Win32Proj"
@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="D:\Git\hiredis_win32"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;HIREDIS_WRAPPER_WIN32_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;HIREDISX_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="2"
@@ -196,7 +196,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\hiredis_wrapper_win32.c"
+				RelativePath=".\hiredisx.c"
 				>
 			</File>
 		</Filter>
@@ -206,7 +206,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\hiredis_wrapper_win32.h"
+				RelativePath=".\hiredisx.h"
 				>
 			</File>
 			<File

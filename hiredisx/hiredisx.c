@@ -24,17 +24,16 @@
   OF SUCH DAMAGE. 
 */
 
-#include "hiredis_wrapper_win32.h"
+#include "hiredisx.h"
 
-#define HIREDIS_WIN
-#include "hiredis.h"
 #include "config.h"
+#include "hiredis.h"
 
 #include <windows.h>
 #include <string.h>
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void *n_redisConnectWithTimeout(
 		const char *ip, 
 		int port, 
@@ -48,22 +47,20 @@ void *n_redisConnectWithTimeout(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_redisCommand(
-		void *context,			// in:  the redisContext to use to execute the command.
-		void *args,				// in:  arguments of command.
-		int argc,				// in:  number of arguments.
-		int *type,				// out: the type of result.
-		long long *integer,		// out: if result is integer, the result.
-		char *strBuf,			// out: if result is string, the result is coppied to this buffer if it is less than strBufLen-1.
-		int strBufLen,  		// in:  the size of strBuf.
-		int *len,				// out: the length of the string in strBuf, or pointed to by reply.
-		int *elements,			// out: number of elements in a multi-reply. If > 0, reply is a pointer to the reply, and ... method should be used to get array and free the reply.
-		void **reply			// out: if !NULL, the reply from redisCommand, which is yet to be freed.
-		)
+		void *context,
+		void *args,
+		int argc,
+		int *type,
+		long long *integer,
+		char *strBuf,
+		int strBufLen,
+		int *len,
+		int *elements,
+		void **reply)
 {
     redisReply *r;
-	redisContext *c;
 	int i;
 	char **argv = (char **)args;
 
@@ -118,7 +115,7 @@ void n_redisCommand(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveElement(
 	void *reply, 
 	int index, 
@@ -151,14 +148,14 @@ void n_retrieveElement(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_freeReplyObject(void *reply)
 {
 	freeReplyObject((redisReply *)reply);
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveStringAndFreeReplyObject(
 		void *reply, 
 		char *toStrPtr)
@@ -168,7 +165,7 @@ void n_retrieveStringAndFreeReplyObject(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_retrieveElementString(
 		void *reply,
 		int index,
@@ -178,7 +175,7 @@ void n_retrieveElementString(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_setupArgumentArray(
 	int length,
 	void **arguments)
@@ -187,7 +184,7 @@ void n_setupArgumentArray(
 }
 
 
-HIREDIS_WRAPPER_WIN32_API
+HIREDISX_API
 void n_setArgument(
    void *arguments,
    int index,
