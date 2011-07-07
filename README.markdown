@@ -1,18 +1,17 @@
 ## Introduction
 
-Nhiredis is a lighweight .NET wrapper around hiredis, the recommend C client for Redis. A
-goal of Nhiredis is to stay close in spirit to the API of hiredis, but to 
+Nhiredis is a lighweight .NET wrapper around hiredis, the recommend C client for Redis. 
 
 
-## Alternatives .NET Redis Clients
+## Alternative .NET Redis Clients
 
 There are two recommended .NET redis clients listed on redis.io - ServiceStack.Redis and BookSleeve. 
 Why do we need another client?
 
 _ServiceStack.Redis_ - I have used this client for some time. The impetus for development of
 Nhiredis was actually the lack of WATCH support in ServiceStack.Redis. One option would have
-been to add support to this library, however there are two other things I don't like so much
-about it: 
+been to add support to this library, or wait for it to arrive, however there are two other 
+things I don't like so much about it: 
 
 1. There are too many functions in a single namespace and the names of the functions are different
    to the actual Redis commands.
