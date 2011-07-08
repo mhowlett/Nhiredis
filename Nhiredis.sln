@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hiredisx", "hiredisx\hiredisx.vcproj", "{91CD4CD1-57F9-4365-928A-22CBDD7B2934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Test", "Nhiredis_Test\Nhiredis_Test.csproj", "{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Benchmark", "Nhiredis_Benchmark\Nhiredis_Benchmark.csproj", "{67AA6989-5C5B-4C3D-ACB2-6673787CCE3E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis",  "Nhiredis\Nhiredis.csproj", "{7A587D10-334F-4937-85E1-8BC3C0546CD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis", "Nhiredis\Nhiredis.csproj", "{7A587D10-334F-4937-85E1-8BC3C0546CD4}"
 	ProjectSection(ProjectDependencies) = postProject
+		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nhiredis_Examples", "Nhiredis_Examples\Nhiredis_Examples.csproj", "{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7A587D10-334F-4937-85E1-8BC3C0546CD4} = {7A587D10-334F-4937-85E1-8BC3C0546CD4}
 		{91CD4CD1-57F9-4365-928A-22CBDD7B2934} = {91CD4CD1-57F9-4365-928A-22CBDD7B2934}
 	EndProjectSection
 EndProject
@@ -55,9 +61,19 @@ Global
 		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7A587D10-334F-4937-85E1-8BC3C0546CD4}.Release|Win32.ActiveCfg = Release|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Debug|Win32.Build.0 = Debug|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C171AFD-ADB5-4E83-94DC-8FB06AA23AE2}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-

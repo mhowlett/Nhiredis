@@ -257,5 +257,20 @@ namespace Nhiredis
             }
         }
 
+        private RedisContext _context;
+        public RedisClient(string host, int port, TimeSpan timeout)
+        {
+            _context = RedisConnectWithTimeout(host, port, timeout);
+        }
+
+        public T RedisCommand<T>(params object[] arguments)
+        {
+            return RedisCommand<T>(_context, arguments);
+        }
+
+        public object RedisCommand(params object[] arguments)
+        {
+            return RedisCommand(_context, arguments);
+        }
     }
 }
