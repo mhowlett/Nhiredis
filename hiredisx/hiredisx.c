@@ -33,6 +33,7 @@
 #include "hiredis.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 
 HIREDISX_API
@@ -64,13 +65,13 @@ void n_redisCommand(
 {
     redisReply *r;
 	int i;
-	char **argv = (char **)args;
+	const char **argv = (char **)args;
 
 	size_t* argvlen = malloc(argc * sizeof(size_t));
 	for (i=0; i<argc; ++i)
 	{
 		argvlen[i] = *((int *)argv[i]);
-		argv[i] = ((int *)argv[i]) + 1;
+		argv[i] = (char *)(((int *)argv[i]) + 1);
 	}
 
 	r = redisCommandArgv((redisContext *)context, argc, argv, argvlen);
