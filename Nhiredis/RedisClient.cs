@@ -43,7 +43,7 @@ namespace Nhiredis
         {
             int seconds = (int)(timeout.TotalSeconds);
             int milliseconds = (int)(timeout.TotalMilliseconds - seconds*1000);
-            return new RedisContext {NativeContext = Interop.n_redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
+            return new RedisContext {NativeContext = Interop.redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
         }
 
         public static T RedisCommand<T>(RedisContext context, params object[] arguments)
@@ -86,15 +86,15 @@ namespace Nhiredis
             IntPtr argumentsPtr = IntPtr.Zero;
             if (arguments.Length > 0)
             {
-                Interop.n_setupArgumentArray(arguments.Length, out argumentsPtr);
+                Interop.setupArgumentArray(arguments.Length, out argumentsPtr);
                 for (int i = 0; i < arguments.Length; ++i)
                 {
                     // currently don't support anything other than ascii string data.
-                    Interop.n_setArgument(argumentsPtr, i, (string) arguments[i], ((string) arguments[i]).Length);
+                    Interop.setArgument(argumentsPtr, i, (string) arguments[i], ((string) arguments[i]).Length);
                 }
             }
 
-            Interop.n_redisCommand(
+            Interop.redisCommand(
                 context.NativeContext,
                 argumentsPtr,
                 arguments.Length,
@@ -113,7 +113,7 @@ namespace Nhiredis
                     {
                         currentSbLen = len + 1;
                         sb = new StringBuilder(currentSbLen);
-                        Interop.n_retrieveStringAndFreeReplyObject(replyObject, sb);
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
                     return sb.ToString();
 
@@ -132,7 +132,7 @@ namespace Nhiredis
                         for (int i = 0; i < elements; ++i)
                         {
                             IntPtr strPtr;
-                            Interop.n_retrieveElement(
+                            Interop.retrieveElement(
                                 replyObject,
                                 i,
                                 out type,
@@ -146,7 +146,7 @@ namespace Nhiredis
                             {
                                 currentSbLen = len + 1;
                                 sb = new StringBuilder(currentSbLen);
-                                Interop.n_retrieveElementString(replyObject, i, sb);
+                                Interop.retrieveElementString(replyObject, i, sb);
                             }
 
                             switch (type)
@@ -199,7 +199,7 @@ namespace Nhiredis
                                     throw new Exception("Unknown redis return type: " + type);
                             }
                         }
-                        Interop.n_freeReplyObject(replyObject);
+                        Interop.freeReplyObject(replyObject);
                     }
 
                     if (result_s != null)
@@ -238,7 +238,7 @@ namespace Nhiredis
                     {
                         currentSbLen = len + 1;
                         sb = new StringBuilder(currentSbLen);
-                        Interop.n_retrieveStringAndFreeReplyObject(replyObject, sb);
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
                     return sb.ToString();
 
@@ -247,7 +247,7 @@ namespace Nhiredis
                     {
                         currentSbLen = len + 1;
                         sb = new StringBuilder(currentSbLen);
-                        Interop.n_retrieveStringAndFreeReplyObject(replyObject, sb);
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
                     throw new Exception(sb.ToString());
 

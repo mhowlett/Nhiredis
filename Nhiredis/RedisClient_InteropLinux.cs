@@ -35,14 +35,14 @@ namespace Nhiredis
         private static class InteropLinux
         {
             [DllImport("hiredisx.so")]
-            public static extern IntPtr n_redisConnectWithTimeout(
+            public static extern IntPtr redisConnectWithTimeoutX(
                 [MarshalAs(UnmanagedType.LPStr)] string ip,
                 int port,
                 int timeoutSeconds,
                 int timeoutMicroseconds);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_redisCommand(
+            public static extern void redisCommandX(
                 IntPtr redisContext,
                 IntPtr args,
                 int argsc,
@@ -55,7 +55,7 @@ namespace Nhiredis
                 out IntPtr reply);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_retrieveElement(
+            public static extern void retrieveElementX(
                 IntPtr replyObject,
                 int index,
                 out int type,
@@ -66,27 +66,27 @@ namespace Nhiredis
                 out IntPtr strPtr);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_freeReplyObject(
+            public static extern void freeReplyObjectX(
                 IntPtr reply);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_retrieveStringAndFreeReplyObject(
+            public static extern void retrieveStringAndFreeReplyObjectX(
                 IntPtr replyObject,
                 [MarshalAs(UnmanagedType.LPStr)] StringBuilder toStrPtr);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_retrieveElementString(
+            public static extern void retrieveElementStringX(
                 IntPtr replyObject,
                 int index,
                 [MarshalAs(UnmanagedType.LPStr)] StringBuilder toStrPtr);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_setupArgumentArray(
+            public static extern void setupArgumentArrayX(
                 int length,
                 out IntPtr arguments);
 
             [DllImport("hiredisx.so")]
-            public static extern void n_setArgument(
+            public static extern void setArgumentX(
                 IntPtr arguments,
                 int index,
                 [MarshalAs(UnmanagedType.LPStr)] string argument,

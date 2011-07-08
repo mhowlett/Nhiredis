@@ -37,7 +37,7 @@
 
 
 HIREDISX_API
-void *n_redisConnectWithTimeout(
+void *redisConnectWithTimeoutX(
 		const char *ip, 
 		int port, 
 		int timeout_seconds, 
@@ -51,7 +51,7 @@ void *n_redisConnectWithTimeout(
 
 
 HIREDISX_API
-void n_redisCommand(
+void redisCommandX(
 		void *context,
 		void *args,
 		int argc,
@@ -119,7 +119,7 @@ void n_redisCommand(
 
 
 HIREDISX_API
-void n_retrieveElement(
+void retrieveElementX(
 	void *reply, 
 	int index, 
 	int *type, 
@@ -152,14 +152,14 @@ void n_retrieveElement(
 
 
 HIREDISX_API
-void n_freeReplyObject(void *reply)
+void freeReplyObjectX(void *reply)
 {
 	freeReplyObject((redisReply *)reply);
 }
 
 
 HIREDISX_API
-void n_retrieveStringAndFreeReplyObject(
+void retrieveStringAndFreeReplyObjectX(
 		void *reply, 
 		char *toStrPtr)
 {
@@ -169,7 +169,7 @@ void n_retrieveStringAndFreeReplyObject(
 
 
 HIREDISX_API
-void n_retrieveElementString(
+void retrieveElementStringX(
 		void *reply,
 		int index,
 		char *toStrPtr)
@@ -179,7 +179,7 @@ void n_retrieveElementString(
 
 
 HIREDISX_API
-void n_setupArgumentArray(
+void setupArgumentArrayX(
 	int length,
 	char **arguments)
 {
@@ -188,7 +188,7 @@ void n_setupArgumentArray(
 
 
 HIREDISX_API
-void n_setArgument(
+void setArgumentX(
    void *arguments,
    int index,
    void *argument,

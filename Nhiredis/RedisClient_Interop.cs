@@ -11,7 +11,7 @@ namespace Nhiredis
 
         private class Interop
         {
-            public static IntPtr n_redisConnectWithTimeout(
+            public static IntPtr redisConnectWithTimeout(
                 string ip,
                 int port,
                 int timeoutSeconds,
@@ -19,15 +19,15 @@ namespace Nhiredis
             {
                 if (UsingWindows)
                 {
-                    return InteropWin32.n_redisConnectWithTimeout(ip, port, timeoutSeconds, timeoutMicroseconds);
+                    return InteropWin32.redisConnectWithTimeoutX(ip, port, timeoutSeconds, timeoutMicroseconds);
                 }
                 else
                 {
-                    return InteropLinux.n_redisConnectWithTimeout(ip, port, timeoutSeconds, timeoutMicroseconds);                    
+                    return InteropLinux.redisConnectWithTimeoutX(ip, port, timeoutSeconds, timeoutMicroseconds);                    
                 }
             }
 
-            public static void n_redisCommand(
+            public static void redisCommand(
                 IntPtr redisContext,
                 IntPtr args,
                 int argsc,
@@ -41,15 +41,15 @@ namespace Nhiredis
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_redisCommand(redisContext, args, argsc, out type, out integer, strBuf, strBufLen, out len, out elements, out reply);
+                    InteropWin32.redisCommandX(redisContext, args, argsc, out type, out integer, strBuf, strBufLen, out len, out elements, out reply);
                 }
                 else
                 {
-                    InteropLinux.n_redisCommand(redisContext, args, argsc, out type, out integer, strBuf, strBufLen, out len, out elements, out reply);
+                    InteropLinux.redisCommandX(redisContext, args, argsc, out type, out integer, strBuf, strBufLen, out len, out elements, out reply);
                 }
             }
 
-            public static void n_retrieveElement(
+            public static void retrieveElement(
                 IntPtr replyObject,
                 int index,
                 out int type,
@@ -61,71 +61,71 @@ namespace Nhiredis
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_retrieveElement(replyObject, index, out type, out integer, strBuf, strBufLen, out len, out strPtr);
+                    InteropWin32.retrieveElementX(replyObject, index, out type, out integer, strBuf, strBufLen, out len, out strPtr);
                 }
                 else
                 {
-                    InteropLinux.n_retrieveElement(replyObject, index, out type, out integer, strBuf, strBufLen, out len, out strPtr);
+                    InteropLinux.retrieveElementX(replyObject, index, out type, out integer, strBuf, strBufLen, out len, out strPtr);
                 }
             }
 
-            public static void n_freeReplyObject(
+            public static void freeReplyObject(
                 IntPtr reply)
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_freeReplyObject(reply);
+                    InteropWin32.freeReplyObjectX(reply);
                 }
                 else
                 {
-                    InteropLinux.n_freeReplyObject(reply);
+                    InteropLinux.freeReplyObjectX(reply);
                 }
             }
 
-            public static void n_retrieveStringAndFreeReplyObject(
+            public static void retrieveStringAndFreeReplyObject(
                 IntPtr replyObject,
                 StringBuilder toStrPtr)
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_retrieveStringAndFreeReplyObject(replyObject, toStrPtr);
+                    InteropWin32.retrieveStringAndFreeReplyObjectX(replyObject, toStrPtr);
                 }
                 else
                 {
-                    InteropLinux.n_retrieveStringAndFreeReplyObject(replyObject, toStrPtr);
+                    InteropLinux.retrieveStringAndFreeReplyObjectX(replyObject, toStrPtr);
                 }
             }
 
-            public static void n_retrieveElementString(
+            public static void retrieveElementString(
                 IntPtr replyObject,
                 int index,
                 StringBuilder toStrPtr)
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_retrieveElementString(replyObject, index, toStrPtr);
+                    InteropWin32.retrieveElementStringX(replyObject, index, toStrPtr);
                 }
                 else
                 {
-                    InteropLinux.n_retrieveElementString(replyObject, index, toStrPtr);
+                    InteropLinux.retrieveElementStringX(replyObject, index, toStrPtr);
                 }
             }
 
-            public static void n_setupArgumentArray(
+            public static void setupArgumentArray(
                 int length,
                 out IntPtr arguments)
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_setupArgumentArray(length, out arguments);
+                    InteropWin32.setupArgumentArrayX(length, out arguments);
                 }
                 else
                 {
-                    InteropLinux.n_setupArgumentArray(length, out arguments);
+                    InteropLinux.setupArgumentArrayX(length, out arguments);
                 }
             }
 
-            public static void n_setArgument(
+            public static void setArgument(
                 IntPtr arguments,
                 int index,
                 string argument,
@@ -133,11 +133,11 @@ namespace Nhiredis
             {
                 if (UsingWindows)
                 {
-                    InteropWin32.n_setArgument(arguments, index, argument, len);
+                    InteropWin32.setArgumentX(arguments, index, argument, len);
                 }
                 else
                 {
-                    InteropLinux.n_setArgument(arguments, index, argument, len);
+                    InteropLinux.setArgumentX(arguments, index, argument, len);
                 }
             }
 
@@ -151,11 +151,7 @@ namespace Nhiredis
                     if (_usingWindows == null)
                     {
                         string os_s = Environment.OSVersion.ToString().ToLower();
-                        if (os_s.Contains("windows"))
-                        {
-                            _usingWindows = true;
-                        }
-                        _usingWindows = false;
+                        _usingWindows = os_s.Contains("windows");
                     }
 
                     return _usingWindows.Value;
