@@ -1,7 +1,7 @@
 ## Introduction
 
 Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client 
-for Redis. 
+for Redis.
 
 Nhiredis can be used under both Windows and Linux/Mono.
 
@@ -51,14 +51,19 @@ like me, this is not an option.
         // RedisCommand so the result is of type string, not object.
         string str = c.RedisCommand<string>("GET", "foo");
 
-        var result = c.RedisCommand<Dictionary<string, string>>("HGETALL", "thedict");
+        // List results from Redis can be interpreted as a dictionary, where
+        // this is appropriate:
+        Dictionary<string,string> result 
+              = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
 		 
 		 
 ## Development Status
 
 Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
 funtion wrappers are not implemented). Of course, you can use this function to access the full
-set of Redis commands. Currently only string parameters are supported.
+set of Redis commands. Currently only string parameters are supported, however it is a
+a fairly trivial excersise to add support for binary parameters, something that is not 
+yet done because I don't need it.
 
 With the core framework in place, it is not a difficult task to do the required remaining 
 implementation, and I expect to do this in the coming months.
@@ -72,6 +77,14 @@ laptop:
 
 * Nhredis was approximately 10% slower.
 * but Nhiredis consumed approximate 10% less memory.
+
+The slightly worse performance is annoying, however:
+
+* In practice, this will not normally be of concern. A more appealing (and complete) interface
+  is more important to me, anyway.
+* I have a few optimizations in mind that will hopefully help.
+* Nhiredis can ultimately be extended with a fire-and-forget layer, which will allow for better
+  performance in some scenarios.
 
 
 ## Building
@@ -106,7 +119,7 @@ build libhiredisx.so but typing "make" in the hiredisx directory.
 copy libhiredisx.so into the same directory you will be using Nhiredis.dll from.
 
 
-## Library Component
+## Library Components
 
 _Nhiredis_ is the library you reference in your application
 
