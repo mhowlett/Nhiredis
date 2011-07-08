@@ -180,7 +180,7 @@ void n_retrieveElementString(
 HIREDISX_API
 void n_setupArgumentArray(
 	int length,
-	void **arguments)
+	char **arguments)
 {
 	*arguments = (void *)malloc(length * sizeof(char *));
 }
@@ -195,6 +195,6 @@ void n_setArgument(
 {
 	char **args = (char **)arguments;
 	args[index] = malloc(sizeof(int) + (len + 1) * sizeof(char));
-	strcpy((char *)(((BYTE *)args[index]) + sizeof(int)), argument);
+	strcpy((char *)(args[index] + sizeof(int)), argument);
 	*((int *)args[index]) = len;
 }
