@@ -40,7 +40,7 @@
 
 #else
 
-#define HIREDIS_API
+#define HIREDISX_API
 
 #endif
 
