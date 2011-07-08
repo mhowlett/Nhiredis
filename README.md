@@ -32,7 +32,7 @@ me, this is not an option.
 	
 	// use the strongly typed RedisCommand function to coerse a reply from redis into
 	// a convenient data type:
-	Dictionart<string, string> result
+	Dictionary<string, string> result
 		 = RedisClient.RedisCommand<Dictionary<string, string>>(rc, "HGETALL", "testdictionary");
 		 
 		 
@@ -44,6 +44,15 @@ set of Redis commands.
 
 With the core framework in place, it is not a difficult task to do the required implementation
 for other methods, and I expect to do this in the coming months.
+
+
+## Benchmarks
+
+the distribution includes a benchmark test that repeatedly sets, gets and deletes keys in a redis
+database using Nhiredis and ServiceStack.Redis. It produced the following results on my laptop:
+
+* Running time was approximately 10% slower with Nhiredis.
+* Nhiredis consumed approximate 10% less memory.
 
 
 ## Building
