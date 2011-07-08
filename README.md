@@ -51,7 +51,10 @@ like me, this is not an option.
         // RedisCommand so the result is of type string, not object.
         string str = c.RedisCommand<string>("GET", "foo");
 
-        var result = c.RedisCommand<Dictionary<string, string>>("HGETALL", "thedict");
+        // List results from Redis can be interpreted as a dictionary, where
+        // this is appropriate:
+        Dictionary<string,string> result 
+              = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
 		 
 		 
 ## Development Status
@@ -78,7 +81,7 @@ laptop:
 The slightly worse performance is annoying, however:
 
 * In practice, this will not normally be of concern. A more appealing (and complete) interface
-  is more important to me.
+  is more important to me, anyway.
 * I have a few optimizations in mind that will hopefully help.
 * Nhiredis can ultimately be extended with a fire-and-forget layer, which will allow for better
   performance in some scenarios.
