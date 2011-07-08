@@ -66,6 +66,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)Debug\hiredis_wrapper_win32.dll $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)Debug\hiredisx.dll $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -69,7 +69,7 @@ namespace Nhiredis
         }
 
         private static object RedisCommandImpl(
-            RedisContext context, 
+            RedisContext context,
             object[] arguments,
             Type typeHint)
         {
@@ -90,7 +90,7 @@ namespace Nhiredis
                 for (int i = 0; i < arguments.Length; ++i)
                 {
                     // currently don't support anything other than ascii string data.
-                    Interop.n_setArgument(argumentsPtr, i, (string) arguments[i], ((string)arguments[i]).Length);
+                    Interop.n_setArgument(argumentsPtr, i, (string) arguments[i], ((string) arguments[i]).Length);
                 }
             }
 
@@ -105,7 +105,7 @@ namespace Nhiredis
                 out len,
                 out elements,
                 out replyObject);
-            
+
             switch (type)
             {
                 case REDIS_REPLY_STRING:
@@ -118,21 +118,26 @@ namespace Nhiredis
                     return sb.ToString();
 
                 case REDIS_REPLY_ARRAY:
-                    List<object> result_o = (typeHint == null || typeHint == typeof(List<object>)) ? new List<object>() : null;
-                    List<string> result_s = (typeHint == typeof(List<string>) || typeHint == typeof(Dictionary<string,string>)) ? new List<string>() : null;
-                    List<long> result_i = typeHint == typeof(List<long>) ? new List<long>() : null;
+                    List<object> result_o = (typeHint == null || typeHint == typeof (List<object>))
+                                                ? new List<object>()
+                                                : null;
+                    List<string> result_s = (typeHint == typeof (List<string>) ||
+                                             typeHint == typeof (Dictionary<string, string>))
+                                                ? new List<string>()
+                                                : null;
+                    List<long> result_i = typeHint == typeof (List<long>) ? new List<long>() : null;
 
                     if (replyObject != IntPtr.Zero)
                     {
-                        for (int i=0; i<elements; ++i)
+                        for (int i = 0; i < elements; ++i)
                         {
                             IntPtr strPtr;
                             Interop.n_retrieveElement(
-                                replyObject, 
+                                replyObject,
                                 i,
                                 out type,
                                 out integer,
-                                sb, 
+                                sb,
                                 currentSbLen,
                                 out len,
                                 out strPtr);
@@ -143,7 +148,7 @@ namespace Nhiredis
                                 sb = new StringBuilder(currentSbLen);
                                 Interop.n_retrieveElementString(replyObject, i, sb);
                             }
-                          
+
                             switch (type)
                             {
                                 case REDIS_REPLY_STRING:
@@ -167,18 +172,18 @@ namespace Nhiredis
                                         result_o.Add(integer);
                                     }
                                     break;
-                                 
+
                                 case REDIS_REPLY_ARRAY:
                                     //
                                     break;
                                 case REDIS_REPLY_NIL:
 
-                                    if (typeHint == typeof(List<object>))
+                                    if (typeHint == typeof (List<object>))
                                     {
                                         result_o.Add(null);
                                     }
-                                    if (typeHint == typeof(List<string>) ||
-                                        typeHint == typeof(Dictionary<string, string>))
+                                    if (typeHint == typeof (List<string>) ||
+                                        typeHint == typeof (Dictionary<string, string>))
                                     {
                                         result_s.Add(null);
                                     }
@@ -199,13 +204,13 @@ namespace Nhiredis
 
                     if (result_s != null)
                     {
-                        if (typeHint == typeof(Dictionary<string, string>))
+                        if (typeHint == typeof (Dictionary<string, string>))
                         {
                             var result_d = new Dictionary<string, string>();
                             int count = result_s.Count%2 == 0 ? result_s.Count : result_s.Count - 1;
-                            for (int i=0; i<count; i += 2)
+                            for (int i = 0; i < count; i += 2)
                             {
-                                result_d.Add(result_s[i], result_s[i+1]);
+                                result_d.Add(result_s[i], result_s[i + 1]);
                             }
                             return result_d;
                         }
@@ -219,7 +224,7 @@ namespace Nhiredis
                     {
                         return result_i;
                     }
-                    
+
                     return null;
 
                 case REDIS_REPLY_INTEGER:

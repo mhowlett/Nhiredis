@@ -25,7 +25,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using Nhiredis;
 
 namespace Nhiredis_Test
@@ -45,26 +44,23 @@ namespace Nhiredis_Test
             // query was ERROR, an exception would be thrown containing the 
             // error message.
             object objectReply = RedisClient.RedisCommand(rc, "PING");
+            Console.WriteLine(objectReply);
 
             // Send a PING command to redis using the strongly typed RedisCommand
             // function. If it happened that the reply from redis can not be 
             // reasonably interpreted as type string, an exception would be thrown.
             string stringReply = RedisClient.RedisCommand<string>(rc, "PING");
+            Console.WriteLine(stringReply);
 
             // Set a value in redis (ignoring the return value). Internally the
             // reply from redis will be type status together with a string value
-            // of OK. This function 
+            // of OK.
             RedisClient.RedisCommand(rc, "SET", "foo", "123");
-
-            var str
-                = RedisClient.RedisCommand<string>(rc, "GET", "gallop");
             
-            var dict 
-                = RedisClient.RedisCommand<Dictionary<string, string>>(rc, "HGETALL", "ei-6");
-
-            var obj 
-                = RedisClient.RedisCommand(rc, "HGETALL", "ei-5");
-
+            // Get a value from redis, explicitly defining the result is expected
+            // to be a string.
+            string str = RedisClient.RedisCommand<string>(rc, "GET", "foo");
+            Console.WriteLine(str);
         }
     }
 }
