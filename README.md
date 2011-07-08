@@ -119,7 +119,7 @@ build libhiredisx.so but typing "make" in the hiredisx directory.
 copy libhiredisx.so into the same directory you will be using Nhiredis.dll from.
 
 
-## Library Component
+## Library Components
 
 _Nhiredis_ is the library you reference in your application
 
