@@ -57,11 +57,11 @@ like me, this is not an option.
 		 
 ## Development Status
 
-Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
-funtion wrappers are not implemented). Of course, this function can be used to access the full
-array of Redis commands. Also, currently only string parameters are supported, however it is a
-a fairly trivial excersise to add support for binary parameters - this has not been done 
-yet because I don't need it.
+Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
+function wrappers are not implemented). Of course, this function can be used to access the full
+array of Redis commands. Also, only string parameters are currently supported. It will be a
+fairly trivial exercise to add support for binary parameters - it is not done yet because I 
+don't personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
 expect to do this in the coming months.
@@ -73,7 +73,7 @@ The distribution includes a benchmark utility that repeatedly sets, gets and del
 redis database using Nhiredis and ServiceStack.Redis. It produced the following results on my 
 laptop:
 
-* Nhredis was approximately 10% slower than ServiceStack.Redis.
+* Nhiredis was approximately 10% slower than ServiceStack.Redis.
 * but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
 
 The slightly worse performance is annoying, however:
