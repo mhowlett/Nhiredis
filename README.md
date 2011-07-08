@@ -58,6 +58,8 @@ laptop:
 
 ## Building
 
+You can download the binary files directly, however if you wish to build yourself, here's how:
+
 ### Windows
 
 First, obtain hiredis and compile it. Note that antirez/hiredis on github currently does not
@@ -67,7 +69,7 @@ the work of others, not me).
 
 The solution/project files were produced by Visual Studio 2008. In visual studio, update the
 hiredisx project 'include directories' and 'additional dependencies' to point to the hiredis 
-source directory and hiredis.lib that you have successfuly build.
+source directory and hiredis.lib that you have successfuly built.
 
 Build the solution.
 
