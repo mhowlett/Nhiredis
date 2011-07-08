@@ -12,9 +12,9 @@ Why Nhiredis?
 
 _ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
-1. It's a bit ugly that there are so many functions clumped together in a single namespace.
-2. The names of the functions are different to the actual Redis commands (so I can never remember 
+1. The names of the functions are different to the actual Redis commands (so I can never remember 
    the Redis commands when I work with the CLI).
+2. It's a bit ugly that there are so many functions clumped together in a single namespace.
 3. There is currently no support for the redis command WATCH.
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very 
