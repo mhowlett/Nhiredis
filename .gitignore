@@ -9,4 +9,11 @@ hiredis_wrapper_win32/Debug
 hiredis_wrapper_win32/hiredis_wrapper_win32.vcproj.asus.Matt.user
 Nhiredis_Test/Nhiredis_Test.csproj.user
 hiredisx/hiredisx.o
+hiredisx/Release
+hiredisx/hiredisx.vcproj.asus.Matt.user
+Nhiredis_Examples/Nhiredis_Examples.csproj.user
+Nhiredis_Benchmark/bin
+Nhiredis_Benchmark/obj
+Nhiredis_Benchmark/Nhiredis_Benchmark.csproj.user
+
 
