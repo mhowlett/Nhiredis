@@ -30,16 +30,17 @@
 // that uses this DLL. This way any other project whose source files include this file see 
 // NHIREDIS_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
-#if defined(_MSC_VER)
+//#if defined(_MSC_VER)
 
-#ifdef HIREDISX_EXPORTS
-#define HIREDISX_API __declspec(dllexport)
-#else
-#define HIREDISX_API __declspec(dllimport)
-#endif
+//#ifdef HIREDISX_EXPORTS
+//#define HIREDISX_API __declspec(dllexport)
+//#else
+//#define HIREDISX_API __declspec(dllimport)
+//#endif
 
-#endif
+//#endif
 
+#define HIREDISX_API
 
 HIREDISX_API
 void *n_redisConnectWithTimeout(
