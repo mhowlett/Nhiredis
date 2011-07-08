@@ -57,10 +57,15 @@ like me, this is not an option.
 		 
 ## Development Status
 
+Nhiredis is used by the website http://backrecord.com. The data schema associated with this website
+is large and complex enough that it pushes the boundaries of what is appropriate use of Redis. Although
+backrecord.com is not publically accessible yet, it is under active development and Nhiredis is given
+a workout every day. _I personally rely on Nhiredis_.
+
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
-function wrappers are not implemented). Of course, this function can be used to access the full
-array of Redis commands. Also, only string parameters are currently supported. It will be a
-fairly trivial exercise to add support for binary parameters - it is not done yet because I 
+function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
+array of Redis functionality. Also, only string parameters are currently supported. It would be a
+fairly trivial exercise to add support for binary parameters; it is not done yet only because I 
 don't personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
