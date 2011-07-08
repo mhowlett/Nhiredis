@@ -6,7 +6,7 @@ for Redis.
 Nhiredis can be used under both Windows and Linux/Mono.
 
 
-## Other .NET Redis Clients
+## Why Nhiredis?
 
 There are two recommended clients for .NET listed on redis.io - ServiceStack.Redis and BookSleeve. 
 Why Nhiredis?
