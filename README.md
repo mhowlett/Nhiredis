@@ -1,7 +1,6 @@
 ## Introduction
 
-Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client 
-for Redis.
+Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client.
 
 Nhiredis can be used under both Windows and Linux/Mono.
 
@@ -17,7 +16,6 @@ _ServiceStack.Redis_ - I have used this client for some time, and it does the jo
 2. The names of the functions are different to the actual Redis commands (so I can never remember 
    the Redis commands when I work with the CLI).
 3. There is currently no support for the redis command WATCH.
-4. It's somewhat more coupled to other components than I would like.
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very 
 good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 
@@ -60,13 +58,13 @@ like me, this is not an option.
 ## Development Status
 
 Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
-funtion wrappers are not implemented). Of course, you can use this function to access the full
-set of Redis commands. Currently only string parameters are supported, however it is a
-a fairly trivial excersise to add support for binary parameters, something that is not 
-yet done because I don't need it.
+funtion wrappers are not implemented). Of course, this function can be used to access the full
+array of Redis commands. Also, currently only string parameters are supported, however it is a
+a fairly trivial excersise to add support for binary parameters - this has not been done 
+yet because I don't need it.
 
-With the core framework in place, it is not a difficult task to do the required remaining 
-implementation, and I expect to do this in the coming months.
+With the core framework in place, the remaining implementation is not a difficult task, and I
+expect to do this in the coming months.
 
 
 ## Benchmarks
@@ -75,16 +73,18 @@ The distribution includes a benchmark utility that repeatedly sets, gets and del
 redis database using Nhiredis and ServiceStack.Redis. It produced the following results on my 
 laptop:
 
-* Nhredis was approximately 10% slower.
-* but Nhiredis consumed approximate 10% less memory.
+* Nhredis was approximately 10% slower than ServiceStack.Redis.
+* but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
 
 The slightly worse performance is annoying, however:
 
-* In practice, this will not normally be of concern. A more appealing (and complete) interface
-  is more important to me, anyway.
-* I have a few optimizations in mind that will hopefully help.
-* Nhiredis can ultimately be extended with a fire-and-forget layer, which will allow for better
-  performance in some scenarios.
+* This is not a practical concern for most people. A more appealing (and complete) interface
+  is more important.
+* I have a few optimizations in mind that will hopefully help the situation. It will be also
+  interesting to benchmark hiredis itself against ServiceStack.Redis to understand better where
+  the inefficiencies lie.
+* Nhiredis will likely ultimately be extended with a fire-and-forget layer, which will allow 
+  for better performance in some scenarios.
 
 
 ## Building
