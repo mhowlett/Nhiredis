@@ -26,7 +26,7 @@ like me, this is not an option.
 
 ## Examples
 
-	var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
+        var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
         // Send a PING command to redis using the loosly typed version of
         // the RedisCommand function. Internally, the reply from redis is
@@ -51,7 +51,7 @@ like me, this is not an option.
         // RedisCommand so the result is of type string, not object.
         string str = c.RedisCommand<string>("GET", "foo");
 
-	var result = c.RedisCommand<Dictionary<string, string>>("HGETALL", "thedict");
+        var result = c.RedisCommand<Dictionary<string, string>>("HGETALL", "thedict");
 		 
 		 
 ## Development Status
