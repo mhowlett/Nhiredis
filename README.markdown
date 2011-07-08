@@ -13,7 +13,7 @@ Why do we need another?
 
 _ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
-1. It's a bit ugly that there are many functions clumped together in a single namespace.
+1. It's a bit ugly that there are so many functions clumped together in a single namespace.
 2. The names of the functions are different to the actual Redis commands (so I can never remember 
    the Redis commands when I work with the CLI).
 3. There is currently no support for the redis command WATCH.
@@ -24,11 +24,17 @@ good. Unfortunately if you are constrained to working with .NET versions earlier
 me, this is not an option.
 
 
+## Examples
+
+
 ## Development Status
 
-Currently, only a wrapper around the blocking redisCommand function is provided (async funtions
-are not supported). However, with the core framework in place, it is not a difficult task to do
-the required implementation.
+Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
+funtion wrappers are not implemented). Of course, you can use this function to access the full
+set of Redis commands.
+
+With the core framework in place, it is not a difficult task to do the required implementation
+for other methods, and I expect to do this in the coming months.
 
 
 ## Building
