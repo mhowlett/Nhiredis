@@ -32,13 +32,15 @@
 // defined with this macro as being exported.
 #if defined(_MSC_VER)
 
-#define HIREDIS_WIN 1
-
 #ifdef HIREDISX_EXPORTS
 #define HIREDISX_API __declspec(dllexport)
 #else
 #define HIREDISX_API __declspec(dllimport)
 #endif
+
+#else
+
+#define HIREDIS_API
 
 #endif
 
