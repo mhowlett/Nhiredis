@@ -7,7 +7,7 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-redis.io lists two recommended clients for .NET - ServiceStack.Redis and BookSleeve. Why Nhiredis?
+redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
 _ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
