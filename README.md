@@ -7,13 +7,12 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-There are two recommended clients for .NET listed on redis.io - ServiceStack.Redis and BookSleeve. 
-Why Nhiredis?
+redis.io lists two recommended clients for .NET - ServiceStack.Redis and BookSleeve. Why Nhiredis?
 
 _ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
-1. The names of the functions are different to the actual Redis commands (so I can never remember 
-   the Redis commands when I work with the CLI).
+1. The names of the functions are different to the actual Redis commands (with the result that I 
+   can never remember the Redis commands when I work with the CLI).
 2. It's a bit ugly that there are so many functions clumped together in a single namespace.
 3. There is currently no support for the redis command WATCH.
 
