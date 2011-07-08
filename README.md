@@ -58,8 +58,8 @@ like me, this is not an option.
 
 Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
 funtion wrappers are not implemented). Of course, you can use this function to access the full
-set of Redis commands. Currently only string parameters are supported, however it would be
-a reasonably trivial excersise to add support for binary parameters, something that is not 
+set of Redis commands. Currently only string parameters are supported, however it is a
+a fairly trivial excersise to add support for binary parameters, something that is not 
 yet done because I don't need it.
 
 With the core framework in place, it is not a difficult task to do the required remaining 
