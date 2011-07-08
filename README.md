@@ -9,7 +9,7 @@ Nhiredis can be used under both Windows and Linux/Mono.
 ## Other .NET Redis Clients
 
 There are two recommended clients for .NET listed on redis.io - ServiceStack.Redis and BookSleeve. 
-Why do we need another?
+Why Nhiredis?
 
 _ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
@@ -33,7 +33,7 @@ like me, this is not an option.
 	// use the strongly typed RedisCommand function to coerce a reply from redis into
 	// a convenient data type:
 	Dictionary<string, string> result
-		 = RedisClient.RedisCommand<Dictionary<string, string>>(rc, "HGETALL", "testdictionary");
+		 = RedisClient.RedisCommand<Dictionary<string, string>>(rc, "HGETALL", "thedict");
 		 
 		 
 ## Development Status
@@ -88,12 +88,13 @@ build libhiredisx.so but typing "make" in the hiredisx directory.
 copy libhiredisx.so into the same directory you will be using Nhiredis.dll from.
 
 
-## Component Overview
+## Library Component
 
-hiredisx (hiredis 'extra') is a C wrapper around hiredis. It serves two purposes:
+_Nhiredis_ is the library you reference in your application
+
+_hiredisx_ (hiredis 'extra') is a C wrapper around hiredis. It serves two purposes:
 
 1. It adds functionality that makes marshalling values between .NET and hiredis easier and
    more efficient.
 2. Under Windows, it provides the definitions required to create a .dll (rather than a static
    library). This is required for interfacing with .NET.
-
