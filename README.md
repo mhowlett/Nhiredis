@@ -81,7 +81,7 @@ laptop:
 * Nhiredis was approximately 10% slower than ServiceStack.Redis.
 * but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
 
-The slightly worse performance is annoying, however:
+The slightly worse performance is a bit annoying, however:
 
 * This is not a practical concern for most people. A more appealing (and complete) interface
   is more important.
