@@ -26,7 +26,16 @@ me, this is not an option.
 
 ## Examples
 
-
+	// create a RedisContext
+	var rc = RedisClient.RedisConnectWithTimeout(
+                    "localhost", 6379, TimeSpan.FromSeconds(2));
+	
+	// use the strongly typed RedisCommand function to coerse a reply from redis into
+	// a convenient data type:
+	Dictionart<string, string> result
+		 = RedisClient.RedisCommand<Dictionary<string, string>>(rc, "HGETALL", "testdictionary");
+		 
+		 
 ## Development Status
 
 Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
