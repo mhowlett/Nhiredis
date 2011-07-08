@@ -65,7 +65,7 @@ void n_redisCommand(
 {
     redisReply *r;
 	int i;
-	const char **argv = (char **)args;
+	char **argv = (char **)args;
 
 	size_t* argvlen = malloc(argc * sizeof(size_t));
 	for (i=0; i<argc; ++i)
@@ -74,7 +74,7 @@ void n_redisCommand(
 		argv[i] = (char *)(((int *)argv[i]) + 1);
 	}
 
-	r = redisCommandArgv((redisContext *)context, argc, argv, argvlen);
+	r = redisCommandArgv((redisContext *)context, argc, (const char **)argv, argvlen);
 
 	free(argvlen);
 
