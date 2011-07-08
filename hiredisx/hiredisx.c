@@ -26,10 +26,12 @@
 
 #include "hiredisx.h"
 
+#if defined(_MSC_VER)
 #include "config.h"
+#endif
+
 #include "hiredis.h"
 
-#include <windows.h>
 #include <string.h>
 
 

@@ -49,4 +49,3 @@ hiredisx (hiredis 'extra') is a C wrapper around hiredis. It serves two purposes
 2. Under Windows, it provides the definitions required to create a .dll (rather than a static
    library). This is required for interfacing with .NET.
 
-
