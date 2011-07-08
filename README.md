@@ -94,7 +94,7 @@ The slightly worse performance is a bit annoying, however:
 
 ## Building
 
-You can download the binary files directly, however if you wish to build yourself, here's how:
+You can download the binary files directly, however if you wish to build Nhiredis yourself, here's how:
 
 ### Windows
 
