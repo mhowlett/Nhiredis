@@ -1,25 +1,34 @@
 ## Introduction
 
-Nhiredis is a .NET client Redis. It is a lighweight wrapper around hiredis, the recommend C client for Redis. 
+Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client 
+for Redis. 
+
+Nhiredis can be used under both Windows and Linux/Mono.
 
 
-## Alternative .NET Redis Clients
+## Other .NET Redis Clients
 
 There are two recommended clients for .NET listed on redis.io - ServiceStack.Redis and BookSleeve. 
 Why do we need another?
 
-_ServiceStack.Redis_ - I have used this client for some time. The impetus for development of
-Nhiredis was actually the lack of WATCH support in ServiceStack.Redis. It would have been
-possible to add WATCH support to this library - or wait for it to arrive, however there are two
-other issues I have with this library: 
+_ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
 
-1. There are too many functions in a single namespace and the names of the functions are different
-   to the actual Redis commands.
-2. I just want a lightweight redis client, nothing else. 
+1. It's a bit ugly that there are many functions clumped together in a single namespace.
+2. The names of the functions are different to the actual Redis commands (so I can never remember 
+   the Redis commands when I work with the CLI).
+3. There is currently no support for the redis command WATCH.
+4. It's somewhat more coupled to other components than I would like.
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very 
-good. Unfortunately if you are constrained to working with C# 3.0, this is not an option.
+good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like
+me, this is not an option.
 
+
+## Development Status
+
+Currently, only a wrapper around the blocking redisCommand function is provided (async funtions
+are not supported). However, with the core framework in place, it is not a difficult task to do
+the required implementation.
 
 
 ## Building
@@ -35,8 +44,9 @@ point to the hiredis source directory and successfully built .lib.
 
 hiredisx (hiredis 'extra') is a C wrapper around hiredis. It serves two purposes:
 
-1. Under Windows, it provides the definitions required to create a .dll (rather than a static
-   library). This is required for interfacing with .NET.
-2. It adds functionality that makes marshalling values between .NET and hiredis easier and
+1. It adds functionality that makes marshalling values between .NET and hiredis easier and
    more efficient.
+2. Under Windows, it provides the definitions required to create a .dll (rather than a static
+   library). This is required for interfacing with .NET.
+
 
