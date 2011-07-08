@@ -82,7 +82,7 @@ void n_redisCommand(
 	{
 		for (i=0; i<argc; ++i)
 		{
-			argv[i] = ((int *)argv[i]) - 1;
+			argv[i] = (char *)(((int *)argv[i]) - 1);
 			free(argv[i]);
 		}
 		free(argv);
