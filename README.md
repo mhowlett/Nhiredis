@@ -9,16 +9,14 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
+_ServiceStack.Redis_ - I have used this client for some time. The one thing I don't like about it is the function names do not match up with the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). In some cases, for example AddItemToSortedSet, the order of the parameters is different also. Also, I don't think some of the names are very good, for example we have AddItemToList, EnqueueItemOnList and PushItemToList all doing the same thing. When I'm coding, and look through the list of methods and see each of these, I wonder which, if any add to the left, or right. Ditto for removing elements.
 
-1. The names of the functions are different to the actual Redis commands (with the result that I 
-   can never remember the Redis commands when I work with the CLI).
-2. It's a bit ugly that there are so many functions clumped together in a single namespace.
-3. There is currently no support for the redis command WATCH.
+My original list of complaints was a longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - it turns out the above caused my attitude to be overly negative. In hindsight, the functionality underlying ServiceStack.Redis is pretty good and using a decent API on top of this would have probably been a better solution that wrapping hiredis.
 
-_Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very 
-good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 
-like me, this is not an option.
+Anyway, as they stand, I prefer to use Nhiredis over ServiceStack.Redis.
+
+
+_Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
 
 ## Examples
