@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d:\Git\hiredis_win32\win32\Debug\hiredis.lib ws2_32.lib"
+				AdditionalDependencies="d:\Git\hiredis_win32\win32\Release\hiredis.lib ws2_32.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -215,7 +215,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="D:\Git\hiredis_win32\win32\Debug\hiredis.lib"
+				AdditionalDependencies="D:\Git\hiredis_win32\win32\Debug\hiredis.lib ws2_32.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"

@@ -31,13 +31,13 @@ namespace Nhiredis_Test
 {
     public class Program
     {
-        static void Nhiredis_Benchmark()
+        static void Nhiredis_Benchmark(int iterations)
         {
             var c = new RedisClient("localhost", 6382, TimeSpan.FromSeconds(2));
 
             DateTime startTime = DateTime.UtcNow;
 
-            for (int i = 0; i < 10000; ++i)
+            for (int i = 0; i < iterations; ++i)
             {
                 string key = Guid.NewGuid().ToString();
                 string value = Guid.NewGuid().ToString();
@@ -54,13 +54,13 @@ namespace Nhiredis_Test
             Console.WriteLine("Execution time: " + executionTime);
         }
 
-        static void ServiceStack_Benchmark()
+        static void ServiceStack_Benchmark(int iterations)
         {
-            ServiceStack.Redis.RedisClient c = new ServiceStack.Redis.RedisClient("localhost", 6382);
+            var c = new ServiceStack.Redis.RedisClient("localhost", 6382);
 
             DateTime startTime = DateTime.UtcNow;
 
-            for (int i = 0; i < 10000; ++i)
+            for (int i = 0; i < iterations; ++i)
             {
                 string key = Guid.NewGuid().ToString();
                 string value = Guid.NewGuid().ToString();
@@ -79,8 +79,21 @@ namespace Nhiredis_Test
 
         static void Main(string[] args)
         {
-            Nhiredis_Benchmark();
-            ServiceStack_Benchmark();
+            if (args.Length != 2)
+            {
+                Console.WriteLine("command line args are: [N|S] [#iterations]");
+                return;
+            }
+            if (args[0] == "N")
+            {
+                Console.WriteLine("Benchmarking Nhiredis... (" + args[1] + " iterations)");
+                Nhiredis_Benchmark(int.Parse(args[1]));
+            }
+            else
+            {
+                Console.WriteLine("Benchmarking ServieStack.Redis... (" + args[1] + " iterations)");
+                ServiceStack_Benchmark(int.Parse(args[1]));
+            }
         }
 
     }

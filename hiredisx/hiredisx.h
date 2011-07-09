@@ -31,17 +31,9 @@
 // NHIREDIS_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
 #if defined(_MSC_VER)
-
-#ifdef HIREDISX_EXPORTS
 #define HIREDISX_API __declspec(dllexport)
 #else
-#define HIREDISX_API __declspec(dllimport)
-#endif
-
-#else
-
 #define HIREDISX_API
-
 #endif
 
 
