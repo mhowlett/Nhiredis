@@ -9,44 +9,42 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands. For one thing, this means that I can never remember the Redis commands when I work with a different client, in particular the CLI. Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But when I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
-
-My original list of complaints was actually longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - my attitude was just overly tainted by the above. It doesn't feel elegant enough.
+_ServiceStack.Redis_ - I am a long time user of this library. What I don't like about it are the command function names. Firstly, they are not the same as the actual Redis commands so I can never remember what these are when I'm working with a different client, in particular the CLI. Also, I don't really like the choice of names. For example AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But do they place items at the front or end of a list? Why the duplication? Why isn't RPUSH a better name than all three of them?
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
 
-## Examples
+## Example
 
-        var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
+            var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
-        // Send a PING command to redis using the loosly typed version of
-        // the RedisCommand function. Internally, the reply from redis is
-        // of type STATUS, with a string value of "PONG". Nhiredis returns
-        // the string value (in this case PONG), however discards the 
-        // explicit fact that the response type was STATUS. If the result
-        // of the command was ERROR, an exception would be thrown containing
-        // the error message sent from Redis.
-        object objectReply = c.RedisCommand("PING");
+            // Send a PING command to the redis server and interpret the 
+            // reply as a string.
+            var pingReply = c.RedisCommand<string>("PING");
+            Console.WriteLine(pingReply);
 
-        // Send a PING command to redis using the strongly typed RedisCommand
-        // function. If it happened that the reply from redis can not be 
-        // reasonably interpreted as type string, an exception would be thrown.
-         string stringReply = c.RedisCommand<string>("PING");
+            // Set a key/value pair. The parameter 42 is not a string, nor is it
+            // an IEnumerable or IDictionary (which would first be automatically 
+            // flattened by Nhiredis). By default then, it will be interpreted as
+            // a string via application of the .ToString() object method.
+            c.RedisCommand("SET", "foo", 42);
 
-        // Set a value in redis (ignoring the return value). Internally the
-        // reply from redis will be type status together with a string value
-        // of OK.
-        c.RedisCommand("SET", "foo", "123");
+            // Get a value from redis, interpreting the result as an int.
+            int intResult = c.RedisCommand<int>("GET", "foo");
+            Console.WriteLine(intResult);
 
-        // Get a value from redis using the strongly typed version of 
-        // RedisCommand so the result is of type string, not object.
-        string str = c.RedisCommand<string>("GET", "foo");
+            // Set multiple hash values. The dictionary parameter is flattened
+            // automatically, so the following is the same as calling:
+            // c.RedisCommand("HMSET", "bar", "a", "7", "b", "\u00AE");
+            // Unicode characters are supported, and will be encoded as UTF8
+            // in Redis.
+            var hashValues = new Dictionary<string, string> {{"a", "a"}, {"b", "\u00AE"}};
+            c.RedisCommand("HMSET", "bar", hashValues);
 
-        // List results from Redis can be interpreted as a dictionary, where
-        // this is appropriate:
-        Dictionary<string,string> result 
-              = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
+            // Get all entries in a hash, interpreting the result as a 
+            // Dictionary<string, string>
+            var hashReply = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
+            Console.WriteLine(hashReply["a"] + " " + hashReply["b"]);
 		 
 		 
 ## Development Status
@@ -58,12 +56,12 @@ a workout every day. _I personally rely on Nhiredis_.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
 function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
-array of Redis functionality. Also, only string parameters are currently supported. It would be a
-fairly trivial exercise to add support for binary parameters; it is not done yet only because I 
-don't personally need it.
+array of Redis functionality. Also, only string parameters are currently supported. It would be a fairly trivial exercise to add support for binary parameters; it is not done
+yet only because I don't personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
 expect to do this in the coming months.
+
 
 
 ## Benchmarks
