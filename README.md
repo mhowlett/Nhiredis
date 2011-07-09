@@ -9,7 +9,7 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. When I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
+_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But when I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
 
 My original list of complaints was actually longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - my attitude was just overly tainted by the above. 
 
