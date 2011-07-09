@@ -11,7 +11,7 @@ redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Wh
 
 _ServiceStack.Redis_ - I have used this client for some time. What I don't like about it is the command function names are not the same as the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). Also, in some cases, for example AddItemToSortedSet, the order of the parameters is different. Also, I don't think some of the names are very good. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. When I'm coding and look through the list of methods and see each of these, I wonder which, if any add to the left, or right. Ditto for removing elements.
 
-My original list of complaints was a longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't. In hindsight, the functionality underlying ServiceStack.Redis is pretty good and using a decent API on top of this would have probably been a better solution that wrapping hiredis.
+My original list of complaints was a longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - my attitude was just overly tainted by the above. In hindsight, the functionality underlying ServiceStack.Redis is pretty good and using a decent API on top of this would have probably been a better solution that wrapping hiredis.
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
