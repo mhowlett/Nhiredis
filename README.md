@@ -69,7 +69,7 @@ expect to do this in the coming months.
 ## Benchmarks
 
 The distribution includes a simple benchmark utility that repeatedly sets, gets and deletes keys in a 
-redis database using Nhiredis and ServiceStack.Redis. This utility suggests that:
+redis database using Nhiredis and ServiceStack.Redis. On my laptop, this utility suggests that:
 
 * Nhiredis is between 1-2% slower than ServiceStack.Redis.
 * but Nhiredis consumes approximately 5-10% less memory than ServiceStack.Redis.
