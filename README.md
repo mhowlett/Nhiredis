@@ -16,7 +16,7 @@ _Booksleeve_ - I haven't looked at this library in detail, but on the surface it
 
 ## Examples
 
-             var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
+            var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
             // Send a PING command to the redis server and interpret the 
             // reply as a string.
