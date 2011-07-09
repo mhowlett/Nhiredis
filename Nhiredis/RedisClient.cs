@@ -25,6 +25,7 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -90,50 +91,46 @@ namespace Nhiredis
             int len;
 
             // flatten arguments list, and interpret all elements as a string as appropriate.
-            var args = new List<object>();
+            var args = new ArrayList();
             for (int i=0; i<arguments.Length; ++i)
             {
-                if (arguments[i] is IEnumerable<object>)
+                if (arguments[i] is IDictionary)
                 {
-                    args.AddRange((IEnumerable<object>)arguments[i]);
-                }
-                else if (arguments[i] is IDictionary<string, string>)
-                {
-                    foreach (var v in (IDictionary<string, string>)arguments[i])
+                    foreach (DictionaryEntry v in (IDictionary)arguments[i])
                     {
-                        args.Add(v.Key);
-                        args.Add(v.Value);
+                        args.Add(v.Key.ToString());
+                        args.Add(v.Value.ToString());
+                    }
+                }
+                else if (!(arguments[i] is string) && arguments[i] is IEnumerable)
+                {
+                    foreach (var v in (IEnumerable)arguments[i])
+                    {
+                        args.Add(v.ToString());
                     }
                 }
                 else
                 {
-                    if (arguments[i] is string)
-                    {
-                        args.Add(arguments[i]);
-                    }
-                    else
-                    {
-                        args.Add(arguments[i].ToString());
-                    }
+                    args.Add(arguments[i].ToString());
                 }
             }
 
             // currently only support string format arguments.
             IntPtr argumentsPtr = IntPtr.Zero;
-            if (arguments.Length > 0)
+            if (args.Count > 0)
             {
-                Interop.setupArgumentArray(arguments.Length, out argumentsPtr);
-                for (int i = 0; i < arguments.Length; ++i)
+                Interop.setupArgumentArray(args.Count, out argumentsPtr);
+                for (int i = 0; i < args.Count; ++i)
                 {
                     // currently don't support anything other than ascii string data.
-                    Interop.setArgument(argumentsPtr, i, (string) arguments[i], ((string) arguments[i]).Length);
+                    Interop.setArgument(argumentsPtr, i, (string) args[i], ((string) args[i]).Length);
                 }
             }
 
             Interop.redisCommand(
                 context.NativeContext,
                 argumentsPtr,
-                arguments.Length,
+                args.Count,
                 out type,
                 out integer,
                 sb,
@@ -151,6 +148,23 @@ namespace Nhiredis
                         sb = new StringBuilder(currentSbLen);
                         Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
+                    if (typeHint == typeof(int))
+                    {
+                        return int.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(long))
+                    {
+                        return long.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(float))
+                    {
+                        return float.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(double))
+                    {
+                        return int.Parse(sb.ToString());
+                    }
+
                     return sb.ToString();
 
                 case REDIS_REPLY_ARRAY:
@@ -264,6 +278,22 @@ namespace Nhiredis
                     return null;
 
                 case REDIS_REPLY_INTEGER:
+                    if (typeHint == typeof(int))
+                    {
+                        return (int) integer;
+                    }
+                    if (typeHint == typeof(string))
+                    {
+                        return integer.ToString();
+                    }
+                    if (typeHint == typeof(double))
+                    {
+                        return (double) integer;
+                    }
+                    if (typeHint == typeof(float))
+                    {
+                        return (float) integer;
+                    }
                     return integer;
 
                 case REDIS_REPLY_NIL:
@@ -276,6 +306,24 @@ namespace Nhiredis
                         sb = new StringBuilder(currentSbLen);
                         Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
+
+                    if (typeHint == typeof(int))
+                    {
+                        return int.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(long))
+                    {
+                        return long.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(float))
+                    {
+                        return float.Parse(sb.ToString());
+                    }
+                    if (typeHint == typeof(double))
+                    {
+                        return int.Parse(sb.ToString());
+                    }
+
                     return sb.ToString();
 
                 case REDIS_REPLY_ERROR:
