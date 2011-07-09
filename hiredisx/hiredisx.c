@@ -43,10 +43,18 @@ void *redisConnectWithTimeoutX(
 		int timeout_seconds, 
 		int timeout_microseconds)
 {
+	redisContext *c;
 	struct timeval tv;
+
 	tv.tv_sec = timeout_seconds;
 	tv.tv_usec = timeout_microseconds;
-	return redisConnectWithTimeout(ip, port, tv);
+	c = redisConnectWithTimeout(ip, port, tv);
+	if (c->err)
+	{
+        // TODO: do something better with c->errstr
+		return NULL;
+    }
+	return c;
 }
 
 

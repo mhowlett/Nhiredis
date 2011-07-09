@@ -63,8 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NhiredisException.cs" />
     <Compile Include="RedisClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedisClient_Commands.cs" />
     <Compile Include="RedisClient_Interop.cs" />
     <Compile Include="RedisClient_InteropLinux.cs" />
     <Compile Include="RedisClient_InteropWin32.cs" />

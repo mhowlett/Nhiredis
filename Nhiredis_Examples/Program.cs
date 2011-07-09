@@ -19,6 +19,8 @@ namespace Nhiredis_Examples
             object objectReply = c.RedisCommand("PING");
             Console.WriteLine(objectReply);
 
+            string s = c.RedisCommand<string>("HGET", "ei-5", "u");
+
             // Send a PING command to redis using the strongly typed RedisCommand
             // function. If it happened that the reply from redis can not be 
             // reasonably interpreted as type string, an exception would be thrown.

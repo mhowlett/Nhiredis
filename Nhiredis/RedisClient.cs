@@ -43,7 +43,14 @@ namespace Nhiredis
         {
             int seconds = (int)(timeout.TotalSeconds);
             int milliseconds = (int)(timeout.TotalMilliseconds - seconds*1000);
-            return new RedisContext {NativeContext = Interop.redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
+            
+            var result = new RedisContext {NativeContext = Interop.redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
+            if (result.NativeContext == IntPtr.Zero)
+            {
+                throw new NhiredisException("Unable to establish redis connection [" + host + ":" + port + "]");
+            }
+            
+            return result;
         }
 
         public static T RedisCommand<T>(RedisContext context, params object[] arguments)
@@ -53,7 +60,7 @@ namespace Nhiredis
             {
                 if (result != null)
                 {
-                    throw new Exception(
+                    throw new NhiredisException(
                         "Expecting RedisCommand reply to have type: " + typeof (T) +
                         ", but type was " + result.GetType());
                 }
@@ -81,6 +88,35 @@ namespace Nhiredis
             int elements;
             IntPtr replyObject;
             int len;
+
+            // flatten arguments list, and interpret all elements as a string as appropriate.
+            var args = new List<object>();
+            for (int i=0; i<arguments.Length; ++i)
+            {
+                if (arguments[i] is IEnumerable<object>)
+                {
+                    args.AddRange((IEnumerable<object>)arguments[i]);
+                }
+                else if (arguments[i] is IDictionary<string, string>)
+                {
+                    foreach (var v in (IDictionary<string, string>)arguments[i])
+                    {
+                        args.Add(v.Key);
+                        args.Add(v.Value);
+                    }
+                }
+                else
+                {
+                    if (arguments[i] is string)
+                    {
+                        args.Add(arguments[i]);
+                    }
+                    else
+                    {
+                        args.Add(arguments[i].ToString());
+                    }
+                }
+            }
 
             // currently only support string format arguments.
             IntPtr argumentsPtr = IntPtr.Zero;
@@ -196,7 +232,7 @@ namespace Nhiredis
                                     break;
 
                                 default:
-                                    throw new Exception("Unknown redis return type: " + type);
+                                    throw new NhiredisException("Unknown redis return type: " + type);
                             }
                         }
                         Interop.freeReplyObject(replyObject);
@@ -249,10 +285,10 @@ namespace Nhiredis
                         sb = new StringBuilder(currentSbLen);
                         Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
                     }
-                    throw new Exception(sb.ToString());
+                    throw new NhiredisException(sb.ToString());
 
                 default:
-                    throw new Exception("Unknown redis return type: " + type);
+                    throw new NhiredisException("Unknown redis return type: " + type);
 
             }
         }
