@@ -74,12 +74,13 @@ laptop:
 
 * Nhiredis was approximately 10% slower than ServiceStack.Redis.
 * but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
+* CPU usage was approximately 30-40% higher with Nhiredis.
 
-The slightly worse performance is a bit annoying, however:
+The worse performance is a bit annoying, however:
 
 * This is not a practical concern for most people. A more appealing (and complete) interface
   is more important.
-* I have a few optimizations in mind that will hopefully help the situation. It will be also
+* I have a few optimizations in mind that will hopefully help the situation. It will also be
   interesting to benchmark hiredis itself against ServiceStack.Redis to understand better where
   the inefficiencies lie.
 * Nhiredis will likely ultimately be extended with a fire-and-forget layer, which will allow 
