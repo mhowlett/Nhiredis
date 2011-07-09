@@ -74,7 +74,7 @@ redis database using Nhiredis and ServiceStack.Redis. This utility suggests that
 * Nhiredis is between 1-2% slower than ServiceStack.Redis.
 * but Nhiredis consumes approximately 5-10% less memory than ServiceStack.Redis.
 
-These differences will not be significant in any practical situation. That said, it would be nice to be able to say Nhiredis is faster than ServiceStack.Redis, and I have a few optimizations in mind that may be able to achieve this.
+These differences will not be significant in any practical situation. That said, it would be nice to be able to say Nhiredis is faster than ServiceStack.Redis, and I have a few optimizations in mind that i'll probably implement that may be able to achieve this.
 
 
 ## Building
