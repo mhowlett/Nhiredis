@@ -1,15 +1,15 @@
 ## Introduction
 
-Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client.
+Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend client for C developers.
 
 Nhiredis can be used under both Windows and Linux/Mono.
 
 
 ## Why Nhiredis?
 
-redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
+There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But when I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
+_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands. For one thing, this means that I can never remember the Redis commands when I work with a different client, in particular the CLI. Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But when I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
 
 My original list of complaints was actually longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - my attitude was just overly tainted by the above. It doesn't feel elegant enough.
 
@@ -68,22 +68,13 @@ expect to do this in the coming months.
 
 ## Benchmarks
 
-The distribution includes a benchmark utility that repeatedly sets, gets and deletes keys in a 
-redis database using Nhiredis and ServiceStack.Redis. It produced the following results on my 
-laptop:
+The distribution includes a simple benchmark utility that repeatedly sets, gets and deletes keys in a 
+redis database using Nhiredis and ServiceStack.Redis. On my laptop, this utility suggests that:
 
-* Nhiredis was approximately 10% slower than ServiceStack.Redis.
-* but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
-* CPU usage was approximately 30-40% higher with Nhiredis.
+* Nhiredis is between 1-2% slower than ServiceStack.Redis.
+* but Nhiredis consumes approximately 5-10% less memory than ServiceStack.Redis.
 
-The worse performance is a bit annoying, however:
-
-* This is not a practical concern for most people. A more appealing interface is more important.
-* I have a few optimizations in mind that will hopefully help the situation. It will also be
-  interesting to benchmark hiredis itself against ServiceStack.Redis to understand better where
-  the inefficiencies lie.
-* Nhiredis will likely ultimately be extended with a fire-and-forget layer, which will allow 
-  for better performance in some scenarios.
+These differences will not be significant in any practical situation. That said, it would be nice to be able to say Nhiredis is faster than ServiceStack.Redis, and I have a few optimizations in mind that i'll probably implement that may be able to achieve this.
 
 
 ## Building
