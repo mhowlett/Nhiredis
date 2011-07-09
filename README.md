@@ -54,12 +54,13 @@ a workout every day. _I personally rely on Nhiredis_.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
 function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
-array of Redis functionality. Also, only string parameters are currently supported. It would be a
-fairly trivial exercise to add support for binary parameters; it is not done yet only because I 
-don't personally need it.
+array of Redis functionality. Also, only string parameters are currently supported (Unicode is stored
+as UTF8). It would be a fairly trivial exercise to add support for binary parameters; it is not done
+yet only because I don't personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
 expect to do this in the coming months.
+
 
 
 ## Benchmarks
