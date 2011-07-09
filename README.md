@@ -78,8 +78,7 @@ laptop:
 
 The worse performance is a bit annoying, however:
 
-* This is not a practical concern for most people. A more appealing (and complete) interface
-  is more important.
+* This is not a practical concern for most people. A more appealing interface is more important.
 * I have a few optimizations in mind that will hopefully help the situation. It will also be
   interesting to benchmark hiredis itself against ServiceStack.Redis to understand better where
   the inefficiencies lie.
