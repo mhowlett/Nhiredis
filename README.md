@@ -16,35 +16,33 @@ _Booksleeve_ - I haven't looked at this library in detail, but on the surface it
 
 ## Examples
 
-        var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
+            // create a new Nhiredis client.
+            var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
-        // Send a PING command to redis using the loosly typed version of
-        // the RedisCommand function. Internally, the reply from redis is
-        // of type STATUS, with a string value of "PONG". Nhiredis returns
-        // the string value (in this case PONG), however discards the 
-        // explicit fact that the response type was STATUS. If the result
-        // of the command was ERROR, an exception would be thrown containing
-        // the error message sent from Redis.
-        object objectReply = c.RedisCommand("PING");
+            // Send a PING command to redis using the strongly typed RedisCommand
+            // function interpreting the result as a string.
+            var pingReply = c.RedisCommand<string>("PING");
+            Console.WriteLine(pingReply);
 
-        // Send a PING command to redis using the strongly typed RedisCommand
-        // function. If it happened that the reply from redis can not be 
-        // reasonably interpreted as type string, an exception would be thrown.
-         string stringReply = c.RedisCommand<string>("PING");
+            // Set a key/value pair. The integer 123 is automatically converted to
+            // a string (currently binary parameters are not supported).
+            c.RedisCommand("SET", "foo", 123);
 
-        // Set a value in redis (ignoring the return value). Internally the
-        // reply from redis will be type status together with a string value
-        // of OK.
-        c.RedisCommand("SET", "foo", "123");
+            // Get a value from redis, interpreting the result as an int.
+            int intResult = c.RedisCommand<int>("GET", "foo");
+            Console.WriteLine(intResult);
 
-        // Get a value from redis using the strongly typed version of 
-        // RedisCommand so the result is of type string, not object.
-        string str = c.RedisCommand<string>("GET", "foo");
+            // Set multiple hash values. The dictionary parameter is flattened
+            // automatically. List<string> parameters are also flattened 
+            // automatically. All other parameter types are interpreted as the
+            // result of the .ToString object method.
+            var hashValues =  new Dictionary<string, string> {{"a", "7"}, {"b", "10"}};
+            c.RedisCommand("HMSET", "bar", hashValues);
 
-        // List results from Redis can be interpreted as a dictionary, where
-        // this is appropriate:
-        Dictionary<string,string> result 
-              = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
+            // Get all entries in a hash, interpreting the result as a 
+            // Dictionary<string, string>
+            var hashReply = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
+            Console.WriteLine(hashReply["a"] + " " + hashReply["b"]);
 		 
 		 
 ## Development Status
