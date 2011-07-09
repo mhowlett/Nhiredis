@@ -1,27 +1,19 @@
 ## Introduction
 
-Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client 
-for Redis.
+Nhiredis is a .NET client for Redis. It is a lighweight wrapper around hiredis, the recommend C client.
 
 Nhiredis can be used under both Windows and Linux/Mono.
 
 
 ## Why Nhiredis?
 
-There are two recommended clients for .NET listed on redis.io - ServiceStack.Redis and BookSleeve. 
-Why Nhiredis?
+redis.io recommends two clients for .NET - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I have used this client for some time, and it does the job. However:
+_ServiceStack.Redis_ - I have used this client a lot. What I don't like about it is the command function names are not the same as the actual Redis commands (which in turn means that I can never remember the Redis commands when I work with a different client, in particular the CLI). Also, I don't really like the choice of names. For example we have AddItemToList, EnqueueItemOnList and PushItemToList which all do the same thing. But when I look through the list of methods and see each of these, I wonder which, if any add to the left, or right (particularly as redis has both LPUSH and RPUSH). 
 
-1. It's a bit ugly that there are so many functions clumped together in a single namespace.
-2. The names of the functions are different to the actual Redis commands (so I can never remember 
-   the Redis commands when I work with the CLI).
-3. There is currently no support for the redis command WATCH.
-4. It's somewhat more coupled to other components than I would like.
+My original list of complaints was actually longer, but when I went to justify them here (having already built Nhiredis), I found I couldn't - my attitude was just overly tainted by the above. It doesn't feel elegant enough.
 
-_Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very 
-good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 
-like me, this is not an option.
+_Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
 
 ## Examples
@@ -59,14 +51,19 @@ like me, this is not an option.
 		 
 ## Development Status
 
-Currently, Nhiredis provides a wrapper around the blocking redisCommand function only (async 
-funtion wrappers are not implemented). Of course, you can use this function to access the full
-set of Redis commands. Currently only string parameters are supported, however it is a
-a fairly trivial excersise to add support for binary parameters, something that is not 
-yet done because I don't need it.
+Nhiredis is used by the website http://backrecord.com. The data schema associated with this website
+is large and complex enough that it pushes the boundaries of what is appropriate use of Redis. Although
+backrecord.com is not publically accessible yet, it is under active development and Nhiredis is given
+a workout every day. _I personally rely on Nhiredis_.
 
-With the core framework in place, it is not a difficult task to do the required remaining 
-implementation, and I expect to do this in the coming months.
+Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
+function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
+array of Redis functionality. Also, only string parameters are currently supported. It would be a
+fairly trivial exercise to add support for binary parameters; it is not done yet only because I 
+don't personally need it.
+
+With the core framework in place, the remaining implementation is not a difficult task, and I
+expect to do this in the coming months.
 
 
 ## Benchmarks
@@ -75,21 +72,23 @@ The distribution includes a benchmark utility that repeatedly sets, gets and del
 redis database using Nhiredis and ServiceStack.Redis. It produced the following results on my 
 laptop:
 
-* Nhredis was approximately 10% slower.
-* but Nhiredis consumed approximate 10% less memory.
+* Nhiredis was approximately 10% slower than ServiceStack.Redis.
+* but Nhiredis consumed approximately 10% less memory than ServiceStack.Redis.
+* CPU usage was approximately 30-40% higher with Nhiredis.
 
-The slightly worse performance is annoying, however:
+The worse performance is a bit annoying, however:
 
-* In practice, this will not normally be of concern. A more appealing (and complete) interface
-  is more important to me, anyway.
-* I have a few optimizations in mind that will hopefully help.
-* Nhiredis can ultimately be extended with a fire-and-forget layer, which will allow for better
-  performance in some scenarios.
+* This is not a practical concern for most people. A more appealing interface is more important.
+* I have a few optimizations in mind that will hopefully help the situation. It will also be
+  interesting to benchmark hiredis itself against ServiceStack.Redis to understand better where
+  the inefficiencies lie.
+* Nhiredis will likely ultimately be extended with a fire-and-forget layer, which will allow 
+  for better performance in some scenarios.
 
 
 ## Building
 
-You can download the binary files directly, however if you wish to build yourself, here's how:
+You can download the binary files directly, however if you wish to build Nhiredis yourself, here's how:
 
 ### Windows
 
