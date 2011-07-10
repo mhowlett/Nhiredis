@@ -257,23 +257,43 @@ namespace Nhiredis
                                 case REDIS_REPLY_ARRAY:
                                     //
                                     break;
+
                                 case REDIS_REPLY_NIL:
 
-                                    if (typeHint == typeof (List<object>))
+                                    if (result_o != null)
                                     {
                                         result_o.Add(null);
                                     }
-                                    if (typeHint == typeof (List<string>) ||
-                                        typeHint == typeof (Dictionary<string, string>))
+                                    else if (result_s != null)
+                                    {
+                                        result_s.Add(null);
+                                    }
+                                    else if (result_i != null)
                                     {
                                         result_s.Add(null);
                                     }
                                     break;
+
                                 case REDIS_REPLY_STATUS:
-                                    //
+                                    if (result_s != null)
+                                    {
+                                        result_s.Add(enc.GetString(byteBuf, 0, len));
+                                    }
+                                    else if (result_o != null)
+                                    {
+                                        result_o.Add(enc.GetString(byteBuf, 0, len));
+                                    }
                                     break;
+
                                 case REDIS_REPLY_ERROR:
-                                    //
+                                    if (result_s != null)
+                                    {
+                                        result_s.Add(enc.GetString(byteBuf, 0, len));
+                                    }
+                                    else if (result_o != null)
+                                    {
+                                        result_o.Add(enc.GetString(byteBuf, 0, len));
+                                    }
                                     break;
 
                                 default:

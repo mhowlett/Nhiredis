@@ -154,7 +154,7 @@ void retrieveElementX(
 	*len = r->element[index]->len;
 	*strPtr = NULL;
 
-	if (r->element[index]->type == REDIS_REPLY_STRING)
+	if (r->element[index]->type == REDIS_REPLY_STRING || r->element[index]->type == REDIS_REPLY_ERROR || r->element[index]->type == REDIS_REPLY_STATUS)
 	{
 		if (r->element[index]->len <= strBufLen)
 		{
