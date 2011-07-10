@@ -172,7 +172,7 @@ namespace Nhiredis
                     }
                     if (typeHint == typeof(double))
                     {
-                        return int.Parse(enc.GetString(byteBuf, 0, len));
+                        return double.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(bool))
                     {
@@ -384,7 +384,7 @@ namespace Nhiredis
                     }
                     if (typeHint == typeof(double))
                     {
-                        return int.Parse(enc.GetString(byteBuf, 0, len));
+                        return double.Parse(enc.GetString(byteBuf, 0, len));
                     }
 
                     return enc.GetString(byteBuf, 0, len);
