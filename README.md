@@ -9,7 +9,7 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal. First of all the command function names are different from the actual Redis commands. The problem is, I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them (I regularly confused as to whether items are placed at the front or end of the list with these functions).
+_ServiceStack.Redis_ - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal. First of all the command function names are different from the actual Redis commands. The problem is, I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
@@ -61,7 +61,7 @@ function wrappers are not yet implemented). Of course, RedisCommand can be used 
 array of Redis functionality. 
 
 Only string parameters are currently supported, however binary parameters are implemented in the hiredisx
-layer and it will be a fairly trivial exercise to add support; it is not done yet only because I don't 
+layer (see below) and it will be a fairly trivial exercise to add support; it is not done yet only because I don't 
 personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
