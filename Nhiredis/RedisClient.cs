@@ -40,12 +40,20 @@ namespace Nhiredis
         private const int REDIS_REPLY_STATUS = 5;
         private const int REDIS_REPLY_ERROR = 6;
 
+        private static UTF8Encoding enc = new UTF8Encoding(false);
+
+        private static byte[] StringToUtf8(string s)
+        {
+            return enc.GetBytes(s);
+        }
+
         public static RedisContext RedisConnectWithTimeout(string host, int port, TimeSpan timeout)
         {
             int seconds = (int)(timeout.TotalSeconds);
             int milliseconds = (int)(timeout.TotalMilliseconds - seconds*1000);
-            
-            var result = new RedisContext {NativeContext = Interop.redisConnectWithTimeout(host, port, seconds, milliseconds * 1000)};
+
+            byte[] ipBytes = StringToUtf8(host);
+            var result = new RedisContext {NativeContext = Interop.redisConnectWithTimeout(ipBytes, ipBytes.Length, port, seconds, milliseconds * 1000)};
             if (result.NativeContext == IntPtr.Zero)
             {
                 throw new NhiredisException("Unable to establish redis connection [" + host + ":" + port + "]");
@@ -81,11 +89,11 @@ namespace Nhiredis
             object[] arguments,
             Type typeHint)
         {
-            int currentSbLen = 64;
+            int currentByteBufLength = 64;
 
             int type;
             long integer;
-            var sb = new StringBuilder(currentSbLen);
+            var byteBuf = new byte[currentByteBufLength];
             int elements;
             IntPtr replyObject;
             int len;
@@ -122,8 +130,10 @@ namespace Nhiredis
                 Interop.setupArgumentArray(args.Count, out argumentsPtr);
                 for (int i = 0; i < args.Count; ++i)
                 {
-                    // currently don't support anything other than ascii string data.
-                    Interop.setArgument(argumentsPtr, i, (string) args[i], ((string) args[i]).Length);
+                    // currently don't support anything other than ascii string data
+                    // but done in such a way this should be easy to add! 
+                    byte[] arg = StringToUtf8((string) args[i]);
+                    Interop.setArgument(argumentsPtr, i, arg, arg.Length);
                 }
             }
 
@@ -133,8 +143,8 @@ namespace Nhiredis
                 args.Count,
                 out type,
                 out integer,
-                sb,
-                currentSbLen,
+                byteBuf,
+                currentByteBufLength,
                 out len,
                 out elements,
                 out replyObject);
@@ -144,29 +154,29 @@ namespace Nhiredis
                 case REDIS_REPLY_STRING:
                     if (replyObject != IntPtr.Zero)
                     {
-                        currentSbLen = len + 1;
-                        sb = new StringBuilder(currentSbLen);
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
+                        currentByteBufLength = len ;
+                        byteBuf = new byte[currentByteBufLength];
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
                     }
                     if (typeHint == typeof(int))
                     {
-                        return int.Parse(sb.ToString());
+                        return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(long))
                     {
-                        return long.Parse(sb.ToString());
+                        return long.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(float))
                     {
-                        return float.Parse(sb.ToString());
+                        return float.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(double))
                     {
-                        return int.Parse(sb.ToString());
+                        return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(bool))
                     {
-                        string s = sb.ToString();
+                        string s = enc.GetString(byteBuf, 0, len);
                         if (s == "1")
                         {
                             return true;
@@ -186,7 +196,7 @@ namespace Nhiredis
                         // else don't understand.
                     }
 
-                    return sb.ToString();
+                    return enc.GetString(byteBuf, 0, len);
 
                 case REDIS_REPLY_ARRAY:
                     List<object> result_o = (typeHint == null || typeHint == typeof (List<object>))
@@ -208,16 +218,16 @@ namespace Nhiredis
                                 i,
                                 out type,
                                 out integer,
-                                sb,
-                                currentSbLen,
+                                byteBuf,
+                                currentByteBufLength,
                                 out len,
                                 out strPtr);
 
                             if (strPtr != IntPtr.Zero)
                             {
-                                currentSbLen = len + 1;
-                                sb = new StringBuilder(currentSbLen);
-                                Interop.retrieveElementString(replyObject, i, sb);
+                                currentByteBufLength = len;
+                                byteBuf = new byte[len];
+                                Interop.retrieveElementString(replyObject, i, byteBuf);
                             }
 
                             switch (type)
@@ -225,11 +235,11 @@ namespace Nhiredis
                                 case REDIS_REPLY_STRING:
                                     if (result_s != null)
                                     {
-                                        result_s.Add(sb.ToString());
+                                        result_s.Add(enc.GetString(byteBuf, 0, len));
                                     }
                                     else if (result_o != null)
                                     {
-                                        result_o.Add(sb.ToString());
+                                        result_o.Add(enc.GetString(byteBuf, 0, len));
                                     }
                                     break;
 
@@ -335,38 +345,38 @@ namespace Nhiredis
                 case REDIS_REPLY_STATUS:
                     if (replyObject != IntPtr.Zero)
                     {
-                        currentSbLen = len + 1;
-                        sb = new StringBuilder(currentSbLen);
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
+                        currentByteBufLength = len;
+                        byteBuf = new byte[currentByteBufLength];
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
                     }
 
                     if (typeHint == typeof(int))
                     {
-                        return int.Parse(sb.ToString());
+                        return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(long))
                     {
-                        return long.Parse(sb.ToString());
+                        return long.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(float))
                     {
-                        return float.Parse(sb.ToString());
+                        return float.Parse(enc.GetString(byteBuf, 0, len));
                     }
                     if (typeHint == typeof(double))
                     {
-                        return int.Parse(sb.ToString());
+                        return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
 
-                    return sb.ToString();
+                    return enc.GetString(byteBuf, 0, len);
 
                 case REDIS_REPLY_ERROR:
                     if (replyObject != IntPtr.Zero)
                     {
-                        currentSbLen = len + 1;
-                        sb = new StringBuilder(currentSbLen);
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, sb);
+                        currentByteBufLength = len ;
+                        byteBuf = new byte[currentByteBufLength];
+                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
                     }
-                    throw new NhiredisException(sb.ToString());
+                    throw new NhiredisException(enc.GetString(byteBuf, 0, len));
 
                 default:
                     throw new NhiredisException("Unknown redis return type: " + type);

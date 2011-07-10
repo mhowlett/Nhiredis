@@ -40,6 +40,7 @@
 HIREDISX_API
 void *redisConnectWithTimeoutX(
 		const char *ip, 
+		int ipLen,
 		int port, 
 		int timeout_seconds, 
 		int timeout_microseconds

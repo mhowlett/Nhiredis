@@ -26,7 +26,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Nhiredis
 {
@@ -36,7 +35,8 @@ namespace Nhiredis
         {
             [DllImport("hiredisx.dll")]
             public static extern IntPtr redisConnectWithTimeoutX(
-                [MarshalAs(UnmanagedType.LPStr)] string ip, 
+                byte[] ip, 
+                int ipLen,
                 int port, 
                 int timeoutSeconds,
                 int timeoutMicroseconds);
@@ -48,7 +48,7 @@ namespace Nhiredis
                 int argsc,
                 out int type, 
                 out long integer,
-                [MarshalAs(UnmanagedType.LPStr)] StringBuilder strBuf,
+                byte[] strBuf,
                 int strBufLen,
                 out int len,
                 out int elements,
@@ -60,7 +60,7 @@ namespace Nhiredis
                 int index,
                 out int type,
                 out long integer,
-                [MarshalAs(UnmanagedType.LPStr)] StringBuilder strBuf,
+                byte[] strBuf,
                 int strBufLen,
                 out int len,
                 out IntPtr strPtr);
@@ -72,13 +72,13 @@ namespace Nhiredis
             [DllImport("hiredisx.dll")]
             public static extern void retrieveStringAndFreeReplyObjectX(
                 IntPtr replyObject,
-                [MarshalAs(UnmanagedType.LPStr)] StringBuilder toStrPtr);
+                byte[] toStrPtr);
 
             [DllImport("hiredisx.dll")]
             public static extern void retrieveElementStringX(
 		        IntPtr replyObject,
 		        int index,
-                [MarshalAs(UnmanagedType.LPStr)] StringBuilder toStrPtr);
+                byte[] toStrPtr);
 
             [DllImport("hiredisx.dll")]
             public static extern void setupArgumentArrayX(
@@ -89,7 +89,7 @@ namespace Nhiredis
             public static extern void setArgumentX(
                 IntPtr arguments,
                 int index,
-                [MarshalAs(UnmanagedType.LPStr)] string argument,
+                byte[] argument,
                 int len);
         }
     }

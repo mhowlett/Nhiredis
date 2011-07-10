@@ -12,18 +12,19 @@ namespace Nhiredis
         private class Interop
         {
             public static IntPtr redisConnectWithTimeout(
-                string ip,
+                byte[] ip,
+                int ipLen,
                 int port,
                 int timeoutSeconds,
                 int timeoutMicroseconds)
             {
                 if (UsingWindows)
                 {
-                    return InteropWin32.redisConnectWithTimeoutX(ip, port, timeoutSeconds, timeoutMicroseconds);
+                    return InteropWin32.redisConnectWithTimeoutX(ip, ipLen, port, timeoutSeconds, timeoutMicroseconds);
                 }
                 else
                 {
-                    return InteropLinux.redisConnectWithTimeoutX(ip, port, timeoutSeconds, timeoutMicroseconds);                    
+                    return InteropLinux.redisConnectWithTimeoutX(ip, ipLen, port, timeoutSeconds, timeoutMicroseconds);                    
                 }
             }
 
@@ -33,7 +34,7 @@ namespace Nhiredis
                 int argsc,
                 out int type,
                 out long integer,
-                StringBuilder strBuf,
+                byte[] strBuf,
                 int strBufLen,
                 out int len,
                 out int elements,
@@ -54,7 +55,7 @@ namespace Nhiredis
                 int index,
                 out int type,
                 out long integer,
-                StringBuilder strBuf,
+                byte[] strBuf,
                 int strBufLen,
                 out int len,
                 out IntPtr strPtr)
@@ -84,7 +85,7 @@ namespace Nhiredis
 
             public static void retrieveStringAndFreeReplyObject(
                 IntPtr replyObject,
-                StringBuilder toStrPtr)
+                byte[] toStrPtr)
             {
                 if (UsingWindows)
                 {
@@ -99,7 +100,7 @@ namespace Nhiredis
             public static void retrieveElementString(
                 IntPtr replyObject,
                 int index,
-                StringBuilder toStrPtr)
+                byte[] toStrPtr)
             {
                 if (UsingWindows)
                 {
@@ -128,7 +129,7 @@ namespace Nhiredis
             public static void setArgument(
                 IntPtr arguments,
                 int index,
-                string argument,
+                byte[] argument,
                 int len)
             {
                 if (UsingWindows)

@@ -38,17 +38,26 @@
 
 HIREDISX_API
 void *redisConnectWithTimeoutX(
-		const char *ip, 
+		const char *ip,
+		int ipLen,
 		int port, 
 		int timeout_seconds, 
 		int timeout_microseconds)
 {
 	redisContext *c;
 	struct timeval tv;
+	int i;
+
+	char *ipStr = malloc((ipLen + 1) * sizeof(char *));
+	for (i = 0; i<ipLen; ++i) { ipStr[i] = ip[i]; }
+	ipStr[ipLen] = '\0';
 
 	tv.tv_sec = timeout_seconds;
 	tv.tv_usec = timeout_microseconds;
 	c = redisConnectWithTimeout(ip, port, tv);
+	
+	free(ipStr);
+
 	if (c->err)
 	{
         // TODO: do something better with c->errstr
@@ -104,9 +113,9 @@ void redisCommandX(
 
 	if (r->type == REDIS_REPLY_STRING || r->type == REDIS_REPLY_ERROR || r->type == REDIS_REPLY_STATUS)
 	{
-		if (r->len < strBufLen-1)
+		if (r->len <= strBufLen)
 		{
-			strcpy(strBuf, r->str);
+			for (i=0; i<r->len; ++i) {strBuf[i] = r->str[i];}
 		}
 		else
 		{
@@ -137,6 +146,7 @@ void retrieveElementX(
 	int *len,
 	char **strPtr)
 {
+	int i;
 	redisReply *r = (redisReply *)reply;
 
 	*type = r->element[index]->type;
@@ -146,9 +156,9 @@ void retrieveElementX(
 
 	if (r->element[index]->type == REDIS_REPLY_STRING)
 	{
-		if (r->element[index]->len < strBufLen-1)
+		if (r->element[index]->len <= strBufLen)
 		{
-			strcpy(strBuf, r->element[index]->str);
+			for (i=0; i<*len; ++i) {strBuf[i] = r->element[index]->str[i];}
 		}
 		else
 		{
@@ -171,7 +181,8 @@ void retrieveStringAndFreeReplyObjectX(
 		void *reply, 
 		char *toStrPtr)
 {
-	strcpy(toStrPtr, ((redisReply *)reply)->str);
+	int i;
+	for (i=0; i<((redisReply *)reply)->len; ++i) { toStrPtr[i] = ((redisReply *)reply)->str[i]; }
 	freeReplyObject((redisReply *)reply);
 }
 
@@ -182,7 +193,9 @@ void retrieveElementStringX(
 		int index,
 		char *toStrPtr)
 {
-	strcpy(toStrPtr, ((redisReply *)reply)->element[index]->str);	
+	int i;
+	for (i=0; i<((redisReply *)reply)->element[index]->len; ++i)
+	  {toStrPtr[i] = ((redisReply *)reply)->element[index]->str[i];}
 }
 
 
@@ -202,8 +215,10 @@ void setArgumentX(
    void *argument,
    int len)
 {
+	int i;
 	char **args = (char **)arguments;
-	args[index] = malloc(sizeof(int) + (len + 1) * sizeof(char));
-	strcpy((char *)(args[index] + sizeof(int)), argument);
+	args[index] = malloc(sizeof(int) + len * sizeof(char));
+	for (i = 0; i<len; ++i)
+	  { ((char *)(args[index] + sizeof(int)))[i] = ((char *)argument)[i]; }
 	*((int *)args[index]) = len;
 }
