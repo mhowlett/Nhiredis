@@ -18,4 +18,5 @@ Nhiredis_Examples/obj
 Nhiredis_Benchmark/bin
 Nhiredis_Benchmark/obj
 Nhiredis_Benchmark/Nhiredis_Benchmark.csproj.user
-Nhiredis/bin/Release
+Nhiredis/bin/Release/Nhiredis.pdb
+
