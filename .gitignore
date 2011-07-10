@@ -1,4 +1,5 @@
 Debug
+Release
 Nhiredis.5.1.ReSharper.user
 Nhiredis.ncb
 Nhiredis.suo
@@ -12,8 +13,9 @@ hiredisx/hiredisx.o
 hiredisx/Release
 hiredisx/hiredisx.vcproj.asus.Matt.user
 Nhiredis_Examples/Nhiredis_Examples.csproj.user
+Nhiredis_Examples/bin
+Nhiredis_Examples/obj
 Nhiredis_Benchmark/bin
 Nhiredis_Benchmark/obj
 Nhiredis_Benchmark/Nhiredis_Benchmark.csproj.user
-
-
+Nhiredis/bin/Release
