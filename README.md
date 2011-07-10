@@ -13,7 +13,7 @@ _ServiceStack.Redis_ - I am a long time user of this library. What I don't like 
 
 _Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
 
-The goal of Nhiredis is to provide a simple and elegant API.
+Nhiredis provides a simple and elegant API as follows:
 
 
 ## Example
