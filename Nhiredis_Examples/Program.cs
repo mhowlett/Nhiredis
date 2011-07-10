@@ -18,15 +18,17 @@ namespace Nhiredis_Examples
             // Set a key/value pair. The parameter 42 is not a string, nor is it
             // an IEnumerable or IDictionary (which would first be automatically 
             // flattened by Nhiredis). By default then, it will be interpreted as
-            // a string via application of the .ToString() object method.
+            // a string by Nhiredis via application of the .ToString() object 
+            // method.
             c.RedisCommand("SET", "foo", 42);
 
-            // Get a value from redis, interpreting the result as an int.
+            // Get a value from redis, interpreting the result (which internally
+            // will be a string for the GET command) as an int.
             int intResult = c.RedisCommand<int>("GET", "foo");
             Console.WriteLine(intResult);
 
             // Set multiple hash values. The dictionary parameter is flattened
-            // automatically, so the following is the same as calling:
+            // automatically, so the following example is the same as calling:
             // c.RedisCommand("HMSET", "bar", "a", "7", "b", "\u00AE");
             // Unicode characters are supported, and will be encoded as UTF8
             // in Redis.
@@ -34,7 +36,8 @@ namespace Nhiredis_Examples
             c.RedisCommand("HMSET", "bar", hashValues);
 
             // Get all entries in a hash, interpreting the result as a 
-            // Dictionary<string, string>
+            // Dictionary<string, string> (internally, redis returns 
+            // an array of string values).
             var hashReply = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
             Console.WriteLine(hashReply["a"] + " " + hashReply["b"]);
         }

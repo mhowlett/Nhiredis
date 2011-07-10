@@ -164,6 +164,27 @@ namespace Nhiredis
                     {
                         return int.Parse(sb.ToString());
                     }
+                    if (typeHint == typeof(bool))
+                    {
+                        string s = sb.ToString();
+                        if (s == "1")
+                        {
+                            return true;
+                        }
+                        if (s == "0")
+                        {
+                            return false;
+                        }
+                        if (s.ToLower() == "true")
+                        {
+                            return true;
+                        }
+                        if (s.ToLower() == "false")
+                        {
+                            return false;
+                        }
+                        // else don't understand.
+                    }
 
                     return sb.ToString();
 
@@ -293,6 +314,18 @@ namespace Nhiredis
                     if (typeHint == typeof(float))
                     {
                         return (float) integer;
+                    }
+                    if (typeHint == typeof(bool))
+                    {
+                        if (integer == 1)
+                        {
+                            return true;
+                        }
+                        if (integer == 0)
+                        {
+                            return false;
+                        }
+                        // else don't understand.
                     }
                     return integer;
 
