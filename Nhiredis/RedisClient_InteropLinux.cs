@@ -33,7 +33,7 @@ namespace Nhiredis
     {
         private static class InteropLinux
         {
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern IntPtr redisConnectWithTimeoutX(
                 byte[] ip,
                 int ipLen,
@@ -41,7 +41,7 @@ namespace Nhiredis
                 int timeoutSeconds,
                 int timeoutMicroseconds);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void redisCommandX(
                 IntPtr redisContext,
                 IntPtr args,
@@ -54,7 +54,7 @@ namespace Nhiredis
                 out int elements,
                 out IntPtr reply);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void retrieveElementX(
                 IntPtr replyObject,
                 int index,
@@ -65,27 +65,27 @@ namespace Nhiredis
                 out int len,
                 out IntPtr strPtr);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void freeReplyObjectX(
                 IntPtr reply);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void retrieveStringAndFreeReplyObjectX(
                 IntPtr replyObject,
                 byte[] toStrPtr);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void retrieveElementStringX(
                 IntPtr replyObject,
                 int index,
                 byte[] toStrPtr);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void setupArgumentArrayX(
                 int length,
                 out IntPtr arguments);
 
-            [DllImport("hiredisx.so")]
+            [DllImport("libhiredisx.so")]
             public static extern void setArgumentX(
                 IntPtr arguments,
                 int index,
