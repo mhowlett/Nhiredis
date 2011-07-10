@@ -30,8 +30,7 @@ namespace Nhiredis_Examples
             // Set multiple hash values. The dictionary parameter is flattened
             // automatically, so the following example is the same as calling:
             // c.RedisCommand("HMSET", "bar", "a", "7", "b", "\u00AE");
-            // Unicode characters are supported, and will be encoded as UTF8
-            // in Redis.
+            // Unicode characters are supported, and will be encoded as UTF8 in Redis.
             var hashValues = new Dictionary<string, string> {{"a", "a"}, {"b", "\u00AE"}};
             c.RedisCommand("HMSET", "bar", hashValues);
 
@@ -40,6 +39,29 @@ namespace Nhiredis_Examples
             // an array of string values).
             var hashReply = c.RedisCommand<Dictionary<string, string>>("HGETALL", "bar");
             Console.WriteLine(hashReply["a"] + " " + hashReply["b"]);
+
+            // return values can be interpreted as bools.
+            if (c.RedisCommand<bool>("EXISTS", "foo"))
+            {
+                Console.WriteLine("Foo exists!");
+            }
+
+            // Example transaction. To test, put a break point before EXEC 
+            // and change foo using the CLI.
+            c.RedisCommand("WATCH", "foo");
+            var foo = c.RedisCommand<int>("GET", "foo");
+            c.RedisCommand("MULTI");
+            c.RedisCommand("SET", "foo2", foo + 2);
+            var execResult = c.RedisCommand<List<string>>("EXEC");
+            if (execResult == null)
+            {
+                Console.WriteLine("EXEC failed!");
+            }
+            else
+            {
+                Console.WriteLine("Command status: " + execResult[0]);
+            }
+
         }
     }
 }
