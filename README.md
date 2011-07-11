@@ -14,7 +14,7 @@ There are two .NET clients recommended on redis.io - ServiceStack.Redis and Book
 **Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, it provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve of course is the seamless asynchronous implementation, which can provide large speed increases in certain circumstances.
 
 
-## Example
+## NhiredisExample
 
             var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
