@@ -1,6 +1,6 @@
 ## Introduction
 
-Nhiredis is a .NET client for Redis. It is a lightweight wrapper around hiredis, the recommend client for C developers. It exposes a simple, yet flexible complete API and it is fast.
+Nhiredis is a .NET client for Redis. It is a lightweight wrapper around hiredis, the recommend client for C developers. It provides a simple, yet flexible and complete API. And it is fast.
 
 Nhiredis can be used under both Windows and Linux/Mono.
 
