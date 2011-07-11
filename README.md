@@ -15,7 +15,7 @@ Compared to ServiceStack.Redis, Nhiredis is about 15% faster according to a simp
 
 **Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, it provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve of course is the seamless asynchronous implementation, which can provide large speed increases in certain circumstances.
 
-Based on the published Booksleeve performance tests, it appears as though Nhiredis is at least as fast as Booksleeve in the blocking case.
+Based on the published Booksleeve performance tests, it appears as though Nhiredis is at least as fast as Booksleeve in the blocking case (but Booksleeve will beat the pants of Nhiredis when fire-and-forget is appropriate).
 
 
 ## Example
