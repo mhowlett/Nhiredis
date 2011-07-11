@@ -133,7 +133,9 @@ build libhiredisx.so but typing "make" in the hiredisx directory.
 copy libhiredisx.so into the same directory you will be using Nhiredis.dll from.
 
 
-**Note:** Nhiredis targets Win32, and applications that use Nhiredis must also set their target property to "Win32" . I don't properly understand the full implications of this, or indeed whether or not there is a way around it, but it doesn't seem to stop me from doing anything I want to do, including running applications that link to Nhiredis using mono under linux.
+#### Note
+
+Nhiredis targets Win32, and applications that use Nhiredis must also set their target property to "Win32" . I don't properly understand the full implications of this, or indeed whether or not there is a way around it, but it doesn't seem to stop me from doing anything I want to do, including running applications that link to Nhiredis using mono under linux.
 
 
 ## Library Components
