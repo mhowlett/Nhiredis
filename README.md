@@ -13,9 +13,9 @@ There are two .NET clients recommended on redis.io - ServiceStack.Redis and Book
 
 Compared to ServiceStack.Redis, Nhiredis is about 15% faster according to a simple locally run get-set-delete benchmark.
 
-**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. 
+**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve is fire-and-forget functionality - something I'll more than add to Nhiredis.
 
-The performance results posted here: http://marcgravell.blogspot.com/2011/04/async-redis-await-booksleeve.html and the (simplistic) benchmark results comparing Nhiredis and ServiceStack.Redis suggest Nhiredis is probably as fast, or even a little faster than Booksleeve.
+The performance results posted here: http://marcgravell.blogspot.com/2011/04/async-redis-await-booksleeve.html and the (simplistic) benchmark results comparing Nhiredis and ServiceStack.Redis suggest Nhiredis is probably as fast, or even a little faster than Booksleeve for the blocking case.
 
 
 ## Example
