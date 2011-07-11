@@ -91,11 +91,11 @@ is not done yet only because I don't personally need it.
 
 The distribution includes a simple benchmark utility that repeatedly sets, gets and deletes keys in a 
 redis database using Nhiredis and ServiceStack.Redis. On my Windows laptop, this utility suggests that 
-the performance of Nhiredis is approximately the same as ServiceStack.Redis (possibly a bit faster), 
+the performance of Nhiredis is approximately the same as ServiceStack.Redis (or possibly a bit faster) 
 and consumes approximately 5-10% less memory.
 
 I found the performance results to vary by up to 20% depending on the state of my machine. Sometimes I
-saw Nhiredis beat ServiceStack.Redis by 20%, sometimes, though more rarely it was the other way around.
+saw Nhiredis beat ServiceStack.Redis by 20%, sometimes, though more rarely, it was the other way around.
 Most frequently the two libraries produced almost identical results.
 
 
