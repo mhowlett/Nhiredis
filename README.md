@@ -13,9 +13,9 @@ There are two .NET clients recommended on redis.io - ServiceStack.Redis and Book
 
 Compared to ServiceStack.Redis, Nhiredis is about 15% faster according to a simple locally run get-set-delete benchmark.
 
-**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve is fire-and-forget functionality - something I'll more than add to Nhiredis.
+**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, it provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. A real selling point of Booksleeve is the speed associated with the fire-and-forget functionality - something I'll more than likely add to Nhiredis.
 
-The performance results posted here: http://marcgravell.blogspot.com/2011/04/async-redis-await-booksleeve.html and the (simplistic) benchmark results comparing Nhiredis and ServiceStack.Redis suggest Nhiredis is probably as fast, or even a little faster than Booksleeve for the blocking case.
+The performance results posted here: http://marcgravell.blogspot.com/2011/04/async-redis-await-booksleeve.html and the (simplistic) benchmark results I produced comparing Nhiredis and ServiceStack.Redis suggest Nhiredis is probably just as fast, or even a little faster than Booksleeve for the blocking case, assuming redis-sharp has similar performance to ServiceStack.Redis (which is derived from redis-sharp).
 
 
 ## Example
@@ -73,8 +73,6 @@ The performance results posted here: http://marcgravell.blogspot.com/2011/04/asy
             {
                 Console.WriteLine("Command status: " + execResult[0]);
             }
-		 
-I thoroughly enjoy using the Nhiredis API.
 
 
 ## Development Status
@@ -94,7 +92,6 @@ is not done yet only because I don't personally need it.
 
 With the core framework in place, the remaining implementation is not a difficult task, and I
 expect to do this in the coming months.
-
 
 
 ## Benchmarks
@@ -148,3 +145,6 @@ _hiredisx_ (hiredis 'extra') is a C wrapper around hiredis. It serves two purpos
    more efficient.
 2. Under Windows, it provides the definitions required to create a .dll (rather than a static
    library). This is required for interfacing with .NET.
+
+
+Note: Nhiredis targets Win32, and applications that use Nhiredis must also set their target property to "Win32" . I don't properly understand the full implications of this, or indeed whether or not there is a way around it, but it doesn't seem to stop me from doing anything I want to do, including running applications that link to Nhiredis using mono under linux.
