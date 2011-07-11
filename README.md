@@ -83,15 +83,12 @@ backrecord.com is not publically accessible yet, it is under active development 
 a workout every day. _I personally rely on Nhiredis_.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
-function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
+functionality is not yet implemented). Of course, RedisCommand can be used to access the full
 array of Redis functionality.
 
 Only string parameters are currently supported, however binary parameters are fully implemented in the
 hiredisx layer (see below) and it will be a fairly trivial exercise to add support to Nhiredis.dll; it
 is not done yet only because I don't personally need it.
-
-With the core framework in place, the remaining implementation is not a difficult task, and I
-expect to do this in the coming months.
 
 
 ## Benchmarks
@@ -105,7 +102,8 @@ redis database using Nhiredis and ServiceStack.Redis. On my laptop, this utility
 
 ## Building
 
-You can download the binary files directly, however if you wish to build Nhiredis yourself, here's how:
+You can download the binary files directly, however if you wish to build Nhiredis yourself, here's
+how:
 
 ### Windows
 
