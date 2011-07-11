@@ -11,11 +11,11 @@ There are two .NET clients recommended on redis.io - ServiceStack.Redis and Book
 
 **ServiceStack.Redis** - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal to me. First of all the command function names are different from the actual Redis commands. The problem with this is I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
 
-_Compared to ServiceStack.Redis, Nhiredis provides a flexible, simple and elegant API - and it is faster - about 15% faster according to a simple locally run get-set-delete benchmark_
+Compared to ServiceStack.Redis, Nhiredis is about 15% faster according to a simple locally run get-set-delete benchmark.
 
 **Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. 
 
-Nhiredis appears as to be about as fast as Booksleeve (probably a little bit faster) for the blocking case. Nhiredis does not yet support fire-and-forget functionality.
+The performance results posted here: http://marcgravell.blogspot.com/2011/04/async-redis-await-booksleeve.html and the (simplistic) benchmark results comparing Nhiredis and ServiceStack.Redis suggest Nhiredis is probably as fast, or even a little faster than Booksleeve.
 
 
 ## Example
