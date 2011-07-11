@@ -9,11 +9,13 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
 
-_ServiceStack.Redis_ - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal to me. First of all the command function names are different from the actual Redis commands. The problem with this is I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
+**ServiceStack.Redis** - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal to me. First of all the command function names are different from the actual Redis commands. The problem with this is I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
 
-_Booksleeve_ - I haven't looked at this library in detail, but on the surface it looks very good. Unfortunately if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option.
+_Compared to ServiceStack.Redis, Nhiredis provides a flexible, simple and elegant API - and it is faster - about 15% faster according to a simple locally run get-set-delete benchmark_
 
-Nhiredis provides a simple and elegant API as follows:
+**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. 
+
+Nhiredis appears as though it is as fast as Booksleeve for the blocking case, Nhiredis does not yet support fire-and-forget functionality.
 
 
 ## Example
@@ -72,7 +74,9 @@ Nhiredis provides a simple and elegant API as follows:
                 Console.WriteLine("Command status: " + execResult[0]);
             }
 		 
-		 
+I thoroughly enjoy using the Nhiredis API.
+
+
 ## Development Status
 
 Nhiredis is used by the website http://backrecord.com. The data schema associated with this website
@@ -82,7 +86,7 @@ a workout every day. _I personally rely on Nhiredis_.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
 function wrappers are not yet implemented). Of course, RedisCommand can be used to access the full
-array of Redis functionality. I am really enjoying using the API.
+array of Redis functionality.
 
 Only string parameters are currently supported, however binary parameters are fully implemented in the
 hiredisx layer (see below) and it will be a fairly trivial exercise to add support to Nhiredis.dll; it
@@ -98,10 +102,8 @@ expect to do this in the coming months.
 The distribution includes a simple benchmark utility that repeatedly sets, gets and deletes keys in a 
 redis database using Nhiredis and ServiceStack.Redis. On my laptop, this utility suggests that:
 
-* Nhiredis is between 1-2% slower than ServiceStack.Redis.
-* but Nhiredis consumes approximately 5-10% less memory than ServiceStack.Redis.
-
-These differences will not be significant in any practical situation. That said, it would be nice to be able to say Nhiredis is faster than ServiceStack.Redis, and I have a few optimizations in mind that i'll probably implement that may be able to achieve this.
+* Nhiredis is between 15-20% faster than ServiceStack.Redis.
+* and Nhiredis consumes approximately 5-10% less memory than ServiceStack.Redis.
 
 
 ## Building
