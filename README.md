@@ -15,7 +15,7 @@ _Compared to ServiceStack.Redis, Nhiredis provides a flexible, simple and elegan
 
 **Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, this library provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. 
 
-Nhiredis appears as though it is as fast as Booksleeve for the blocking case, Nhiredis does not yet support fire-and-forget functionality.
+Nhiredis appears as to be about as fast as Booksleeve (probably a little bit faster) for the blocking case. Nhiredis does not yet support fire-and-forget functionality.
 
 
 ## Example
