@@ -7,11 +7,9 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
+Nhiredis provides an interface that closer matches the raw Redis commands than the two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. This in my opinion makes it's usage more readable than these two libraries. Furthermore, the type coercing functionality is very convenient - in my experience, more convenient than the competition. 
 
-**ServiceStack.Redis** - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal to me. First of all the command function names are different from the actual Redis commands. The problem with this is I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
-
-**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, it provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve of course is the seamless asynchronous implementation, which can provide large speed increases in certain circumstances.
+I built Nhiredis because it provides the API i would most like to use :-), and using it is an enjoyable experience.
 
 
 ## Nhiredis Example
