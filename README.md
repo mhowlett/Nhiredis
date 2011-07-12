@@ -7,7 +7,7 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-Nhiredis provides an interface that closer matches the raw Redis commands than the two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. This in my opinion makes it's usage more readable. But it is not lower level - the type coercing functionality is very convenient - in my experience, using Nhiredis is more convenient than the competition. 
+Nhiredis provides an interface that closer matches the raw Redis commands than the two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. This in my opinion makes it's usage more readable. But it is not lower level - the type coercing functionality is very convenient and in my experience, using Nhiredis is more convenient than the competition. 
 
 I built Nhiredis because it provides the API i would most like to use... and I find using it an enjoyable experience.
 
