@@ -110,7 +110,7 @@ namespace Nhiredis
                         args.Add(v.Value.ToString());
                     }
                 }
-                else if (!(arguments[i] is string) && arguments[i] is IEnumerable)
+                else if (!(arguments[i] is byte[]) && !(arguments[i] is string) && arguments[i] is IEnumerable)
                 {
                     foreach (var v in (IEnumerable)arguments[i])
                     {
@@ -119,21 +119,32 @@ namespace Nhiredis
                 }
                 else
                 {
-                    args.Add(arguments[i].ToString());
+                    if (arguments[i] is byte[])
+                    {
+                        args.Add(arguments[i]);
+                    }
+                    else
+                    {
+                        args.Add(arguments[i].ToString());
+                    }
                 }
             }
 
-            // currently only support string format arguments.
             IntPtr argumentsPtr = IntPtr.Zero;
             if (args.Count > 0)
             {
                 Interop.setupArgumentArray(args.Count, out argumentsPtr);
                 for (int i = 0; i < args.Count; ++i)
                 {
-                    // currently don't support anything other than ascii string data
-                    // but done in such a way this should be easy to add! 
-                    byte[] arg = StringToUtf8((string) args[i]);
-                    Interop.setArgument(argumentsPtr, i, arg, arg.Length);
+                    if (args[i] is byte[])
+                    {
+                        Interop.setArgument(argumentsPtr, i, (byte[])args[i], ((byte[])args[i]).Length);
+                    }
+                    else
+                    {
+                        byte[] arg = StringToUtf8((string) args[i]);
+                        Interop.setArgument(argumentsPtr, i, arg, arg.Length);
+                    }
                 }
             }
 
@@ -195,6 +206,15 @@ namespace Nhiredis
                         }
                         // else don't understand.
                     }
+                    if (typeHint == typeof(byte[]))
+                    {
+                        byte[] bytes = new byte[len];
+                        for (int i=0; i<len; ++i)
+                        {
+                            bytes[i] = byteBuf[i];
+                        }
+                        return bytes;
+                    }
 
                     return enc.GetString(byteBuf, 0, len);
 
@@ -207,7 +227,8 @@ namespace Nhiredis
                                                 ? new List<string>()
                                                 : null;
                     List<long> result_i = typeHint == typeof (List<long>) ? new List<long>() : null;
-
+                    List<byte[]> result_b = typeHint == typeof (List<byte[]>) ? new List<byte[]>() : null;
+ 
                     if (replyObject != IntPtr.Zero)
                     {
                         for (int i = 0; i < elements; ++i)
@@ -241,6 +262,15 @@ namespace Nhiredis
                                     {
                                         result_o.Add(enc.GetString(byteBuf, 0, len));
                                     }
+                                    else if (result_b != null)
+                                    {
+                                        var res = new byte[len];
+                                        for (int k=0; k<len; ++k)
+                                        {
+                                            res[k] = byteBuf[k];
+                                        }
+                                        result_b.Add(res);
+                                    }
                                     break;
 
                                 case REDIS_REPLY_INTEGER:
@@ -271,6 +301,10 @@ namespace Nhiredis
                                     else if (result_i != null)
                                     {
                                         result_s.Add(null);
+                                    }
+                                    else if (result_b != null)
+                                    {
+                                        result_b.Add(null);
                                     }
                                     break;
 
@@ -324,6 +358,10 @@ namespace Nhiredis
                     if (result_i != null)
                     {
                         return result_i;
+                    }
+                    if (result_b != null)
+                    {
+                        return result_b;
                     }
 
                     return null;

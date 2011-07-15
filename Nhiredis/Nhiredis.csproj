@@ -70,6 +70,7 @@
     <Compile Include="RedisClient_Interop.cs" />
     <Compile Include="RedisClient_InteropLinux.cs" />
     <Compile Include="RedisClient_InteropWin32.cs" />
+    <Compile Include="RedisClient_Transaction.cs" />
     <Compile Include="RedisContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
