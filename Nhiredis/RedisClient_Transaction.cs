@@ -8,14 +8,23 @@ namespace Nhiredis
     {
         public delegate void TransactionFunction();
 
+        public enum RetryType
+        {
+            Randomize,
+            Predictable
+        }
+
         public void Transaction(
             string name,
             TimeSpan delayBeforeRetry,
             int maxRetries,
+            RetryType retryType,
             TransactionFunction preMulti,
             TransactionFunction postMulti
             )
         {
+            Random r = null;
+
             int tryCount = 0;
             while (true)
             {
@@ -34,7 +43,21 @@ namespace Nhiredis
                 {
                     throw new NhiredisException("Transaction failed: " + name);
                 }
-                Thread.Sleep(delayBeforeRetry);
+
+                if (retryType == RetryType.Predictable)
+                {
+                    Thread.Sleep(delayBeforeRetry);
+                }
+                else
+                {
+                    if (r == null)
+                    {
+                        r = new Random(DateTime.Now.Millisecond);
+                    }
+                    double maxDelay = delayBeforeRetry.TotalMilliseconds;
+                    double delay = maxDelay * (r.NextDouble() * 0.9 + 0.1);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(delay));
+                }
             }
         }
 
