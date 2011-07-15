@@ -7,11 +7,9 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-There are two .NET clients recommended on redis.io - ServiceStack.Redis and BookSleeve. Why do we need Nhiredis?
+Nhiredis provides an interface that matches the raw Redis commands more closely than the two .NET clients recommended on redis.io - BookSleeve and ServiceStack.Redis. But Nhiredis is not lower level - the type coercing functionality is very convenient and in my experience, using it is nicer and the code more readable than the alternatives. 
 
-**ServiceStack.Redis** - I am a long time user of this library. It does a reliable job, but the API doesn't really appeal to me. First of all the command function names are different from the actual Redis commands. The problem with this is I can never remember what the Redis commands are when I'm working with a different client, in particular the CLI. Also consider, for example, AddItemToList, EnqueueItemOnList and PushItemToList - they all do the same thing. Why the duplication? Why isn't RPUSH a better name than all three of them? (I regularly get confused as to whether items are placed at the front or end of the list with these functions).
-
-**Booksleeve** - I haven't looked at this library in detail, but on the surface it does look good. Like ServiceStack.Redis, it provides separate C# functions for each Redis command, and again these aren't the same as the actual redis commands, but the choice of names seems to be better. Also, Booksleeve makes use of C# 4/5 features, so if you are constrained to working with .NET versions earlier than C# 4.0 like me, this is not an option. The real selling point of Booksleeve of course is the seamless asynchronous implementation, which can provide large speed increases in certain circumstances.
+I built Nhiredis because it provides the API I would most like to use.
 
 
 ## Nhiredis Example
@@ -85,6 +83,8 @@ array of Redis functionality.
 Only string parameters are currently supported, however binary parameters are fully implemented in the
 hiredisx layer (see below) and it will be a fairly trivial exercise to add support to Nhiredis.dll; it
 is not done yet only because I don't personally need it.
+
+The current version is 0.6.
 
 
 ## Benchmarks
