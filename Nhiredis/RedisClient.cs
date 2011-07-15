@@ -271,6 +271,15 @@ namespace Nhiredis
                                         }
                                         result_b.Add(res);
                                     }
+                                    else if (result_i != null)
+                                    {
+                                        long result;
+                                        if (!long.TryParse(enc.GetString(byteBuf, 0, len),out result))
+                                        {
+                                            result = long.MinValue;
+                                        }
+                                        result_i.Add(result);
+                                    }
                                     break;
 
                                 case REDIS_REPLY_INTEGER:
@@ -282,10 +291,33 @@ namespace Nhiredis
                                     {
                                         result_o.Add(integer);
                                     }
+                                    else if (result_s != null)
+                                    {
+                                        result_s.Add(integer.ToString());
+                                    }
+                                    else if (result_b != null)
+                                    {
+                                        result_b.Add(BitConverter.GetBytes(integer));
+                                    }
                                     break;
 
                                 case REDIS_REPLY_ARRAY:
-                                    //
+                                    if (result_o != null)
+                                    {
+                                        result_o.Add(null);
+                                    }
+                                    else if (result_s != null)
+                                    {
+                                        result_s.Add(null);
+                                    }
+                                    else if (result_i != null)
+                                    {
+                                        result_i.Add(int.MinValue);
+                                    }
+                                    else if (result_b != null)
+                                    {
+                                        result_b.Add(null);
+                                    }
                                     break;
 
                                 case REDIS_REPLY_NIL:
@@ -300,7 +332,7 @@ namespace Nhiredis
                                     }
                                     else if (result_i != null)
                                     {
-                                        result_s.Add(null);
+                                        result_i.Add(long.MinValue);
                                     }
                                     else if (result_b != null)
                                     {
@@ -317,6 +349,24 @@ namespace Nhiredis
                                     {
                                         result_o.Add(enc.GetString(byteBuf, 0, len));
                                     }
+                                    else if (result_i != null)
+                                    {
+                                        long result;
+                                        if (!long.TryParse(enc.GetString(byteBuf, 0, len), out result))
+                                        {
+                                            result = long.MinValue;
+                                        }
+                                        result_i.Add(result);
+                                    }
+                                    else if (result_b != null)
+                                    {
+                                        var res = new byte[len];
+                                        for (int k = 0; k < len; ++k)
+                                        {
+                                            res[k] = byteBuf[k];
+                                        }
+                                        result_b.Add(res);
+                                    }
                                     break;
 
                                 case REDIS_REPLY_ERROR:
@@ -327,6 +377,14 @@ namespace Nhiredis
                                     else if (result_o != null)
                                     {
                                         result_o.Add(enc.GetString(byteBuf, 0, len));
+                                    }
+                                    else if (result_i != null)
+                                    {
+                                        result_i.Add(long.MinValue);
+                                    }
+                                    else if (result_b != null)
+                                    {
+                                        result_b.Add(null);
                                     }
                                     break;
 
@@ -339,6 +397,10 @@ namespace Nhiredis
 
                     if (result_s != null)
                     {
+                        if (result_s.Count == 0)
+                        {
+                            return null;
+                        }
                         if (typeHint == typeof (Dictionary<string, string>))
                         {
                             var result_d = new Dictionary<string, string>();
@@ -353,14 +415,26 @@ namespace Nhiredis
                     }
                     if (result_o != null)
                     {
+                        if (result_o.Count == 0)
+                        {
+                            return null;
+                        }
                         return result_o;
                     }
                     if (result_i != null)
                     {
+                        if (result_i.Count == 0)
+                        {
+                            return null;
+                        }
                         return result_i;
                     }
                     if (result_b != null)
                     {
+                        if (result_b.Count == 0)
+                        {
+                            return null;
+                        }
                         return result_b;
                     }
 
