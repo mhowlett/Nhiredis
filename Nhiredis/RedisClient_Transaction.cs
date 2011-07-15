@@ -8,7 +8,7 @@ namespace Nhiredis
     {
         public delegate void TransactionFunction();
 
-        public enum RetryType
+        public enum TransactionRetryType
         {
             Randomize,
             Predictable
@@ -18,7 +18,7 @@ namespace Nhiredis
             string name,
             TimeSpan delayBeforeRetry,
             int maxRetries,
-            RetryType retryType,
+            TransactionRetryType retryType,
             TransactionFunction preMulti,
             TransactionFunction postMulti
             )
@@ -44,7 +44,7 @@ namespace Nhiredis
                     throw new NhiredisException("Transaction failed: " + name);
                 }
 
-                if (retryType == RetryType.Predictable)
+                if (retryType == TransactionRetryType.Predictable)
                 {
                     Thread.Sleep(delayBeforeRetry);
                 }

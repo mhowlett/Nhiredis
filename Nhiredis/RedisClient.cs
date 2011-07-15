@@ -169,19 +169,19 @@ namespace Nhiredis
                         byteBuf = new byte[currentByteBufLength];
                         Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
                     }
-                    if (typeHint == typeof(int))
+                    if (typeHint == typeof(int) || typeHint == typeof(int?))
                     {
                         return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(long))
+                    if (typeHint == typeof(long) || typeHint == typeof(long?))
                     {
                         return long.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(float))
+                    if (typeHint == typeof(float) || typeHint == typeof(float?))
                     {
                         return float.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(double))
+                    if (typeHint == typeof(double) || typeHint == typeof(double?))
                     {
                         return double.Parse(enc.GetString(byteBuf, 0, len));
                     }
@@ -441,7 +441,7 @@ namespace Nhiredis
                     return null;
 
                 case REDIS_REPLY_INTEGER:
-                    if (typeHint == typeof(int))
+                    if (typeHint == typeof(int) || typeHint == typeof(int?))
                     {
                         return (int) integer;
                     }
@@ -449,15 +449,15 @@ namespace Nhiredis
                     {
                         return integer.ToString();
                     }
-                    if (typeHint == typeof(double))
+                    if (typeHint == typeof(double) || typeHint == typeof(double?))
                     {
                         return (double) integer;
                     }
-                    if (typeHint == typeof(float))
+                    if (typeHint == typeof(float) || typeHint == typeof(float?))
                     {
                         return (float) integer;
                     }
-                    if (typeHint == typeof(bool))
+                    if (typeHint == typeof(bool) || typeHint == typeof(bool?))
                     {
                         if (integer == 1)
                         {
@@ -482,19 +482,19 @@ namespace Nhiredis
                         Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
                     }
 
-                    if (typeHint == typeof(int))
+                    if (typeHint == typeof(int) || typeHint == typeof(int?))
                     {
                         return int.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(long))
+                    if (typeHint == typeof(long) || typeHint == typeof(long?))
                     {
                         return long.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(float))
+                    if (typeHint == typeof(float) || typeHint == typeof(float?))
                     {
                         return float.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(double))
+                    if (typeHint == typeof(double) || typeHint == typeof(double?))
                     {
                         return double.Parse(enc.GetString(byteBuf, 0, len));
                     }
