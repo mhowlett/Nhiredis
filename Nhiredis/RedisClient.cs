@@ -185,7 +185,7 @@ namespace Nhiredis
                     {
                         return double.Parse(enc.GetString(byteBuf, 0, len));
                     }
-                    if (typeHint == typeof(bool))
+                    if (typeHint == typeof(bool) || typeHint == typeof(bool?))
                     {
                         string s = enc.GetString(byteBuf, 0, len);
                         if (s == "1")
