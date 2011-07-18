@@ -11,7 +11,8 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 
 1. Parameters and return types of the RedisCommand (which is used for everything) can be conveniently coerced into what you need. This is very flexible: 
 
-            c.RedisCommand("SET", "foo", 42);          // 42 becomes string.
+            c.RedisCommand("SET", "foo", 42);          // parameters are interpreted as string by default. 
+                                                       //   note: binary parameter are supported using byte[].
             c.RedisCommand<int>("GET", "foo");         // return value is interpreted as int if possible
                                                        //   (otherwise exception thrown).
             c.RedisCommand<int?>("GET", "foo");        // return value will be null if foo does not exist,
