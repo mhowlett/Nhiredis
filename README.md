@@ -9,9 +9,9 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 I built Nhiredis because it provides the API I would most like to use. Highlights:
 
-1. Parameters and return types of the RedisCommand (which is used for everything) can be conveniently coerced into what you need. This is very flexible: 
+1. Parameters and return types of the RedisCommand (which you use for everything) can be conveniently coerced into what you need. This is very flexible: 
 
-            c.RedisCommand("SET", "foo", 42);          // parameters are interpreted as string by default. 
+            c.RedisCommand("SET", "foo", 42);          // parameters of most types are interpreted as a string automatically.
                                                        //   note: binary parameter are supported using byte[].
             c.RedisCommand<int>("GET", "foo");         // return value is interpreted as int if possible
                                                        //   (otherwise exception thrown).
