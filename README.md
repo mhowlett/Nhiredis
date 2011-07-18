@@ -11,11 +11,15 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 
 1. Parameters and return types of the RedisCommand (which is used for everything) can be conveniently coerced into what you need. This is very flexible: 
 
-            c.RedisCommand("SET", "foo", 42);       // 42 becomes string.
-            c.RedisCommand<int>("GET", "foo");      // return value is interpreted as int if possible (otherwise exception thrown).
-            c.RedisCommand<int?>("GET", "foo");     // return value will be null if foo does not exist, otherwise it will be interpreted as an int.
-            c.RedisCommand("HMSET", "foo", myDict); // myDict is automatically flattened in to key1, value1, key2, value2 ...
-            c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo") // return value is interpreted as a dictionary.
+            c.RedisCommand("SET", "foo", 42);          // 42 becomes string.
+            c.RedisCommand<int>("GET", "foo");         // return value is interpreted as int if possible
+                                                       //   (otherwise exception thrown).
+            c.RedisCommand<int?>("GET", "foo");        // return value will be null if foo does not exist,
+                                                       //   otherwise it will be interpreted as an int.
+            c.RedisCommand("HMSET", "foo", myDict);    // myDict is automatically flattened into
+                                                       //   key1, value1, key2, value2 ...
+            c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo") 
+                                                       // return value is interpreted as a dictionary.  
 
 
 2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is passed as a string value as the first parameter of the RedisCommand function.
