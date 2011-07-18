@@ -7,9 +7,18 @@ Nhiredis can be used under both Windows and Linux/Mono.
 
 ## Why Nhiredis?
 
-Nhiredis provides an interface that matches the raw Redis commands more closely than the two .NET clients recommended on redis.io - BookSleeve and ServiceStack.Redis. But Nhiredis is not lower level - the type coercing functionality is very convenient. 
+I built Nhiredis because it provides the API I would most like to use. Highlights:
 
-I built Nhiredis because it provides the API I would most like to use. 
+1. Parameters and return types of the RedisCommand (which is used for everything) can be conveniently coerced into what you need. This is very flexible: 
+
+    c.RedisCommand("SET", "foo", 42);       // 42 becomes string.
+    c.RedisCommand<int>("GET", "foo");      // return value is interpreted as int if possible (otherwise exception thrown).
+    c.RedisCommand<int?>("GET", "foo");     // return value will be null if foo does not exist, otherwise it will be interpreted as an int.
+    c.RedisCommand("HMSET", "foo", myDict); // myDict is automatically flattened in to key1, value1, key2, value2 ...
+    c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo") // return value is interpreted as a dictionary.
+    
+
+2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is passed as a string value as the first parameter of the RedisCommand function.
 
 
 ## Nhiredis Example
@@ -67,6 +76,9 @@ I built Nhiredis because it provides the API I would most like to use.
             {
                 Console.WriteLine("Command status: " + execResult[0]);
             }
+            
+            // binary values / return types are supported:
+            c.RedisCommand("SET", "foo", new byte[] {0, 4, 3});
 
 
 ## Development Status
