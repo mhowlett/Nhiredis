@@ -223,7 +223,7 @@ namespace Nhiredis
                                                 ? new List<object>()
                                                 : null;
                     List<string> result_s = (typeHint == typeof (List<string>) ||
-                                             typeHint == typeof (Dictionary<string, string>))
+                                             typeof (IDictionary).IsAssignableFrom(typeHint))
                                                 ? new List<string>()
                                                 : null;
                     List<long> result_i = typeHint == typeof (List<long>) ? new List<long>() : null;
@@ -401,15 +401,9 @@ namespace Nhiredis
                         {
                             return null;
                         }
-                        if (typeHint == typeof (Dictionary<string, string>))
+                        if (typeof(IDictionary).IsAssignableFrom(typeHint))
                         {
-                            var result_d = new Dictionary<string, string>();
-                            int count = result_s.Count%2 == 0 ? result_s.Count : result_s.Count - 1;
-                            for (int i = 0; i < count; i += 2)
-                            {
-                                result_d.Add(result_s[i], result_s[i + 1]);
-                            }
-                            return result_d;
+                            return Utils.ConstructDictionary(result_s, typeHint);
                         }
                         return result_s;
                     }

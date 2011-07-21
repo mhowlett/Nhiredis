@@ -72,6 +72,7 @@
     <Compile Include="RedisClient_InteropWin32.cs" />
     <Compile Include="RedisClient_Transaction.cs" />
     <Compile Include="RedisContext.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
