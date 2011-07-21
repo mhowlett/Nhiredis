@@ -397,10 +397,6 @@ namespace Nhiredis
 
                     if (result_s != null)
                     {
-                        if (result_s.Count == 0)
-                        {
-                            return null;
-                        }
                         if (typeof(IDictionary).IsAssignableFrom(typeHint))
                         {
                             return Utils.ConstructDictionary(result_s, typeHint);
@@ -409,26 +405,14 @@ namespace Nhiredis
                     }
                     if (result_o != null)
                     {
-                        if (result_o.Count == 0)
-                        {
-                            return null;
-                        }
                         return result_o;
                     }
                     if (result_i != null)
                     {
-                        if (result_i.Count == 0)
-                        {
-                            return null;
-                        }
                         return result_i;
                     }
                     if (result_b != null)
                     {
-                        if (result_b.Count == 0)
-                        {
-                            return null;
-                        }
                         return result_b;
                     }
 
