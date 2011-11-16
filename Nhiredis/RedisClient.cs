@@ -114,7 +114,14 @@ namespace Nhiredis
                 {
                     foreach (var v in (IEnumerable)arguments[i])
                     {
-                        args.Add(v.ToString());
+                        if (v is byte[])
+                        {
+                            args.Add(v);
+                        }
+                        else
+                        {
+                            args.Add(v.ToString());
+                        }
                     }
                 }
                 else

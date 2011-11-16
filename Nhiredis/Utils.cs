@@ -62,6 +62,16 @@ namespace Nhiredis
                 return result;
             }
 
+            if (typeHint == typeof(Dictionary<int, int>))
+            {
+                var result = new Dictionary<int, int>();
+                for (int i = 0; i < count; i += 2)
+                {
+                    result.Add(int.Parse(values[i]), int.Parse(values[i + 1]));
+                }
+                return result;                
+            }
+
             // TODO: more cases
 
             return values;
