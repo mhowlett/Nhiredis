@@ -8,7 +8,9 @@ namespace Nhiredis_Examples
     {
         static void Main(string[] args)
         {
-            var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
+            var c = new RedisClient("192.168.113.99", 6379, TimeSpan.FromSeconds(2));
+
+            var l = c.RedisCommand<List<int>>("SMEMBERS", "~tP-1271");
 
             // Send a PING command to the redis server and interpret the 
             // reply as a string.

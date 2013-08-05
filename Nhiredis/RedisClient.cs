@@ -233,7 +233,8 @@ namespace Nhiredis
                                              typeof (IDictionary).IsAssignableFrom(typeHint))
                                                 ? new List<string>()
                                                 : null;
-                    List<long> result_i = typeHint == typeof (List<long>) ? new List<long>() : null;
+                    List<long> result_l = typeHint == typeof (List<long>) ? new List<long>() : null;
+                    List<int> result_i = typeHint == typeof (List<int>) ? new List<int>() : null; 
                     List<byte[]> result_b = typeHint == typeof (List<byte[]>) ? new List<byte[]>() : null;
  
                     if (replyObject != IntPtr.Zero)
@@ -278,21 +279,34 @@ namespace Nhiredis
                                         }
                                         result_b.Add(res);
                                     }
-                                    else if (result_i != null)
+                                    else if (result_l != null)
                                     {
                                         long result;
                                         if (!long.TryParse(enc.GetString(byteBuf, 0, len),out result))
                                         {
                                             result = long.MinValue;
                                         }
+                                        result_l.Add(result);
+                                    }
+                                    else if (result_i != null)
+                                    {
+                                        int result;
+                                        if (!int.TryParse(enc.GetString(byteBuf, 0, len), out result))
+                                        {
+                                            result = int.MinValue;
+                                        }
                                         result_i.Add(result);
                                     }
                                     break;
 
                                 case REDIS_REPLY_INTEGER:
-                                    if (result_i != null)
+                                    if (result_l != null)
                                     {
-                                        result_i.Add(integer);
+                                        result_l.Add(integer);
+                                    }
+                                    else if (result_i != null)
+                                    {
+                                        result_i.Add((int)integer);
                                     }
                                     else if (result_o != null)
                                     {
@@ -317,6 +331,10 @@ namespace Nhiredis
                                     {
                                         result_s.Add(null);
                                     }
+                                    else if (result_l != null)
+                                    {
+                                        result_l.Add(long.MinValue);
+                                    }
                                     else if (result_i != null)
                                     {
                                         result_i.Add(int.MinValue);
@@ -337,9 +355,13 @@ namespace Nhiredis
                                     {
                                         result_s.Add(null);
                                     }
+                                    else if (result_l != null)
+                                    {
+                                        result_l.Add(long.MinValue);
+                                    }
                                     else if (result_i != null)
                                     {
-                                        result_i.Add(long.MinValue);
+                                        result_i.Add(int.MinValue);
                                     }
                                     else if (result_b != null)
                                     {
@@ -356,12 +378,21 @@ namespace Nhiredis
                                     {
                                         result_o.Add(enc.GetString(byteBuf, 0, len));
                                     }
-                                    else if (result_i != null)
+                                    else if (result_l != null)
                                     {
                                         long result;
                                         if (!long.TryParse(enc.GetString(byteBuf, 0, len), out result))
                                         {
                                             result = long.MinValue;
+                                        }
+                                        result_l.Add(result);
+                                    }
+                                    else if (result_i != null)
+                                    {
+                                        int result;
+                                        if (!int.TryParse(enc.GetString(byteBuf, 0, len), out result))
+                                        {
+                                            result = int.MinValue;
                                         }
                                         result_i.Add(result);
                                     }
@@ -385,9 +416,13 @@ namespace Nhiredis
                                     {
                                         result_o.Add(enc.GetString(byteBuf, 0, len));
                                     }
+                                    else if (result_l != null)
+                                    {
+                                        result_l.Add(long.MinValue);
+                                    }
                                     else if (result_i != null)
                                     {
-                                        result_i.Add(long.MinValue);
+                                        result_i.Add(int.MinValue);
                                     }
                                     else if (result_b != null)
                                     {
@@ -413,6 +448,10 @@ namespace Nhiredis
                     if (result_o != null)
                     {
                         return result_o;
+                    }
+                    if (result_l != null)
+                    {
+                        return result_l;
                     }
                     if (result_i != null)
                     {
