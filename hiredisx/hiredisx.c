@@ -35,9 +35,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 HIREDISX_API
-void *redisConnectWithTimeoutX(
+void* redisConnectWithTimeoutX(
 		const char *ip,
 		int ipLen,
 		int port, 
@@ -48,7 +47,7 @@ void *redisConnectWithTimeoutX(
 	struct timeval tv;
 	int i;
 
-	char *ipStr = malloc((ipLen + 1) * sizeof(char *));
+	char *ipStr = (char *)malloc((ipLen + 1) * sizeof(char *));
 	for (i = 0; i<ipLen; ++i) { ipStr[i] = ip[i]; }
 	ipStr[ipLen] = '\0';
 
@@ -63,9 +62,9 @@ void *redisConnectWithTimeoutX(
         // TODO: do something better with c->errstr
 		return NULL;
     }
-	return c;
-}
 
+	return (void *)c;
+}
 
 HIREDISX_API
 void redisCommandX(
@@ -84,14 +83,14 @@ void redisCommandX(
 	int i;
 	char **argv = (char **)args;
 
-	size_t* argvlen = malloc(argc * sizeof(size_t));
+	size_t* argvlen = (size_t *)malloc(argc * sizeof(size_t));
 	for (i=0; i<argc; ++i)
 	{
 		argvlen[i] = *((int *)argv[i]);
 		argv[i] = (char *)(((int *)argv[i]) + 1);
 	}
 
-	r = redisCommandArgv((redisContext *)context, argc, (const char **)argv, argvlen);
+	r = (redisReply *)redisCommandArgv((redisContext *)context, argc, (const char **)argv, argvlen);
 
 	free(argvlen);
 
@@ -134,7 +133,6 @@ void redisCommandX(
 	freeReplyObject(r);
 }
 
-
 HIREDISX_API
 void retrieveElementX(
 	void *reply, 
@@ -168,13 +166,11 @@ void retrieveElementX(
 	}
 }
 
-
 HIREDISX_API
 void freeReplyObjectX(void *reply)
 {
 	freeReplyObject((redisReply *)reply);
 }
-
 
 HIREDISX_API
 void retrieveStringAndFreeReplyObjectX(
@@ -185,7 +181,6 @@ void retrieveStringAndFreeReplyObjectX(
 	for (i=0; i<((redisReply *)reply)->len; ++i) { toStrPtr[i] = ((redisReply *)reply)->str[i]; }
 	freeReplyObject((redisReply *)reply);
 }
-
 
 HIREDISX_API
 void retrieveElementStringX(
@@ -198,15 +193,13 @@ void retrieveElementStringX(
 	  {toStrPtr[i] = ((redisReply *)reply)->element[index]->str[i];}
 }
 
-
 HIREDISX_API
 void setupArgumentArrayX(
 	int length,
 	char **arguments)
 {
-	*arguments = (void *)malloc(length * sizeof(char *));
+	*arguments = (char *)malloc(length * sizeof(char *));
 }
-
 
 HIREDISX_API
 void setArgumentX(
@@ -217,7 +210,7 @@ void setArgumentX(
 {
 	int i;
 	char **args = (char **)arguments;
-	args[index] = malloc(sizeof(int) + len * sizeof(char));
+	args[index] = (char *)malloc(sizeof(int) + len * sizeof(char));
 	for (i = 0; i<len; ++i)
 	  { ((char *)(args[index] + sizeof(int)))[i] = ((char *)argument)[i]; }
 	*((int *)args[index]) = len;

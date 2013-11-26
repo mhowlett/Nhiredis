@@ -8,7 +8,7 @@ namespace Nhiredis_Examples
     {
         static void Main(string[] args)
         {
-            var c = new RedisClient("192.168.113.99", 6379, TimeSpan.FromSeconds(2));
+            var c = new RedisClient("127.0.0.1", 6379, TimeSpan.FromSeconds(2));
 
             var l = c.RedisCommand<List<int>>("SMEMBERS", "~tP-1271");
 

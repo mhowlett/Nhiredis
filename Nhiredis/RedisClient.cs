@@ -53,13 +53,20 @@ namespace Nhiredis
             int milliseconds = (int)(timeout.TotalMilliseconds - seconds*1000);
 
             byte[] ipBytes = StringToUtf8(host);
-            var result = new RedisContext {NativeContext = Interop.redisConnectWithTimeout(ipBytes, ipBytes.Length, port, seconds, milliseconds * 1000)};
-            if (result.NativeContext == IntPtr.Zero)
+            unsafe
             {
-                throw new NhiredisException("Unable to establish redis connection [" + host + ":" + port + "]");
+                fixed (byte* pIpBytes = ipBytes)
+                {
+                    var result = new RedisContext { NativeContext = Interop.redisConnectWithTimeoutX(new IntPtr(pIpBytes), ipBytes.Length, port, seconds, milliseconds * 1000) };
+
+                    if (result.NativeContext == IntPtr.Zero)
+                    {
+                        throw new NhiredisException("Unable to establish redis connection [" + host + ":" + port + "]");
+                    }
+
+                    return result;
+                }
             }
-            
-            return result;
         }
 
         public static T RedisCommand<T>(RedisContext context, params object[] arguments)
@@ -140,22 +147,22 @@ namespace Nhiredis
             IntPtr argumentsPtr = IntPtr.Zero;
             if (args.Count > 0)
             {
-                Interop.setupArgumentArray(args.Count, out argumentsPtr);
+                Interop.setupArgumentArrayX(args.Count, out argumentsPtr);
                 for (int i = 0; i < args.Count; ++i)
                 {
                     if (args[i] is byte[])
                     {
-                        Interop.setArgument(argumentsPtr, i, (byte[])args[i], ((byte[])args[i]).Length);
+                        Interop.setArgumentX(argumentsPtr, i, (byte[])args[i], ((byte[])args[i]).Length);
                     }
                     else
                     {
                         byte[] arg = StringToUtf8((string) args[i]);
-                        Interop.setArgument(argumentsPtr, i, arg, arg.Length);
+                        Interop.setArgumentX(argumentsPtr, i, arg, arg.Length);
                     }
                 }
             }
 
-            Interop.redisCommand(
+            Interop.redisCommandX(
                 context.NativeContext,
                 argumentsPtr,
                 args.Count,
@@ -174,7 +181,7 @@ namespace Nhiredis
                     {
                         currentByteBufLength = len ;
                         byteBuf = new byte[currentByteBufLength];
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
+                        Interop.retrieveStringAndFreeReplyObjectX(replyObject, byteBuf);
                     }
                     if (typeHint == typeof(int) || typeHint == typeof(int?))
                     {
@@ -242,7 +249,7 @@ namespace Nhiredis
                         for (int i = 0; i < elements; ++i)
                         {
                             IntPtr strPtr;
-                            Interop.retrieveElement(
+                            Interop.retrieveElementX(
                                 replyObject,
                                 i,
                                 out type,
@@ -256,7 +263,7 @@ namespace Nhiredis
                             {
                                 currentByteBufLength = len;
                                 byteBuf = new byte[len];
-                                Interop.retrieveElementString(replyObject, i, byteBuf);
+                                Interop.retrieveElementStringX(replyObject, i, byteBuf);
                             }
 
                             switch (type)
@@ -434,7 +441,7 @@ namespace Nhiredis
                                     throw new NhiredisException("Unknown redis return type: " + type);
                             }
                         }
-                        Interop.freeReplyObject(replyObject);
+                        Interop.freeReplyObjectX(replyObject);
                     }
 
                     if (result_s != null)
@@ -503,7 +510,7 @@ namespace Nhiredis
                     {
                         currentByteBufLength = len;
                         byteBuf = new byte[currentByteBufLength];
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
+                        Interop.retrieveStringAndFreeReplyObjectX(replyObject, byteBuf);
                     }
 
                     if (typeHint == typeof(int) || typeHint == typeof(int?))
@@ -530,7 +537,7 @@ namespace Nhiredis
                     {
                         currentByteBufLength = len ;
                         byteBuf = new byte[currentByteBufLength];
-                        Interop.retrieveStringAndFreeReplyObject(replyObject, byteBuf);
+                        Interop.retrieveStringAndFreeReplyObjectX(replyObject, byteBuf);
                     }
                     throw new NhiredisException(enc.GetString(byteBuf, 0, len));
 

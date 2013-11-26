@@ -171,24 +171,26 @@ namespace Nhiredis
 
             // anyway, delegates work everywhere so that's what we'll use for now. get it working first, optimize later.
 
-            redisConnectWithTimeout = (redisConnectWithTimeoutX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "redisConnectWithTimeoutX"), typeof(redisConnectWithTimeoutX_delegate));
-            redisCommand = (redisCommandX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "redisCommandX"), typeof(redisCommandX_delegate));
-            retrieveElement = (retrieveElementX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveElementX"), typeof(retrieveElementX_delegate));
-            freeReplyObject = (freeReplyObjectX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "freeReplyObjectX"), typeof(freeReplyObjectX_delegate));
-            retrieveStringAndFreeReplyObject = (retrieveStringAndFreeReplyObjectX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveStringAndFreeReplyObjectX"), typeof(retrieveStringAndFreeReplyObjectX_delegate));
-            retrieveElementString = (retrieveElementStringX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveElementStringX"), typeof(retrieveElementStringX_delegate));
-            setupArgumentArray = (setupArgumentArrayX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "setupArgumentArrayX"), typeof(setupArgumentArrayX_delegate));
-            setArgument = (setArgumentX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "setArgumentX"), typeof(setArgumentX_delegate));
+            redisConnectWithTimeoutX = (redisConnectWithTimeoutX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "redisConnectWithTimeoutX"), typeof(redisConnectWithTimeoutX_delegate));
+            redisCommandX = (redisCommandX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "redisCommandX"), typeof(redisCommandX_delegate));
+            retrieveElementX = (retrieveElementX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveElementX"), typeof(retrieveElementX_delegate));
+            freeReplyObjectX = (freeReplyObjectX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "freeReplyObjectX"), typeof(freeReplyObjectX_delegate));
+            retrieveStringAndFreeReplyObjectX = (retrieveStringAndFreeReplyObjectX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveStringAndFreeReplyObjectX"), typeof(retrieveStringAndFreeReplyObjectX_delegate));
+            retrieveElementStringX = (retrieveElementStringX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "retrieveElementStringX"), typeof(retrieveElementStringX_delegate));
+            setupArgumentArrayX = (setupArgumentArrayX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "setupArgumentArrayX"), typeof(setupArgumentArrayX_delegate));
+            setArgumentX = (setArgumentX_delegate)Marshal.GetDelegateForFunctionPointer(lookup(hiredisxAddr, "setArgumentX"), typeof(setArgumentX_delegate));
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate IntPtr redisConnectWithTimeoutX_delegate(
-            byte[] ip,
+            IntPtr ip,
             int ipLen,
             int port,
             int timeoutSeconds,
             int timeoutMicroseconds);
-        public static redisConnectWithTimeoutX_delegate redisConnectWithTimeout;
+        public static redisConnectWithTimeoutX_delegate redisConnectWithTimeoutX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void redisCommandX_delegate(
             IntPtr redisContext,
             IntPtr args,
@@ -200,8 +202,9 @@ namespace Nhiredis
             out int len,
             out int elements,
             out IntPtr reply);
-        public static redisCommandX_delegate redisCommand;
+        public static redisCommandX_delegate redisCommandX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void retrieveElementX_delegate(
             IntPtr replyObject,
             int index,
@@ -211,34 +214,39 @@ namespace Nhiredis
             int strBufLen,
             out int len,
             out IntPtr strPtr);
-        public static retrieveElementX_delegate retrieveElement;
+        public static retrieveElementX_delegate retrieveElementX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void freeReplyObjectX_delegate(
             IntPtr reply);
-        public static freeReplyObjectX_delegate freeReplyObject;
+        public static freeReplyObjectX_delegate freeReplyObjectX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void retrieveStringAndFreeReplyObjectX_delegate(
             IntPtr replyObject,
             byte[] toStrPtr);
-        public static retrieveStringAndFreeReplyObjectX_delegate retrieveStringAndFreeReplyObject;
+        public static retrieveStringAndFreeReplyObjectX_delegate retrieveStringAndFreeReplyObjectX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void retrieveElementStringX_delegate(
             IntPtr replyObject,
             int index,
             byte[] toStrPtr);
-        public static retrieveElementStringX_delegate retrieveElementString;
+        public static retrieveElementStringX_delegate retrieveElementStringX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void setupArgumentArrayX_delegate(
             int length,
             out IntPtr arguments);
-        public static setupArgumentArrayX_delegate setupArgumentArray;
+        public static setupArgumentArrayX_delegate setupArgumentArrayX;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void setArgumentX_delegate(
             IntPtr arguments,
             int index,
             byte[] argument,
             int len);
-        public static setArgumentX_delegate setArgument;
+        public static setArgumentX_delegate setArgumentX;
 
     }
 }
