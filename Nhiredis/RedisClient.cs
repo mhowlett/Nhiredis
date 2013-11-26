@@ -1,4 +1,4 @@
-﻿/*
+/*
   Copyright (c) 2011, Matt Howlett
   All rights reserved.
 
