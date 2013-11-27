@@ -2,7 +2,7 @@
 # Copyright (C) 2011 Matt Howlett <matt dot howlett at gmail dot com>
 # This file is released under the BSD license, see the LICENSE.txt file
 
-HIREDIS_PATH=../../hiredis
+HIREDIS_PATH=/opt/hiredis
 FLAGS=-O2
 
 all: libhiredisx
