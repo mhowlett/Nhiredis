@@ -53,7 +53,7 @@ void* redisConnectWithTimeoutX(
 
 	tv.tv_sec = timeout_seconds;
 	tv.tv_usec = timeout_microseconds;
-	c = redisConnectWithTimeout(ip, port, tv);
+	c = redisConnectWithTimeout(ipStr, port, tv);
 	
 	free(ipStr);
 
