@@ -89,9 +89,8 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 ## Development Status
 
 Nhiredis is used by the website http://backrecord.com. The data schema associated with this website
-is large and complex enough that it pushes the boundaries of what is appropriate use of Redis. Although
-backrecord.com is not publically accessible yet, it is under active development and Nhiredis is given
-a workout every day. _I personally rely on Nhiredis_.
+is large and complex enough that it pushes the boundaries of what is appropriate use of Redis. 
+Nhiredis is given a workout every day. _I personally rely on Nhiredis_.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
 functionality is not yet implemented). Of course, RedisCommand can be used to access the full
@@ -124,9 +123,9 @@ build on Windows. I recommend using my fork (mhowlett/hiredis), which is the ver
 personally use in conjunction with Nhiredis (note: the compatibility changes are largely
 the work of others, not me).
 
-The solution/project files were produced by Visual Studio 2008. In visual studio, update the
-hiredisx project 'include directories' and 'additional dependencies' to point to the hiredis 
-source directory and hiredis.lib that you have successfuly built.
+The solution/project files/binaies were produced by Visual Studio 2012. In visual studio, 
+update the hiredisx project 'include directories' and 'additional dependencies' to point
+to the hiredis source directory and hiredis.lib that you have successfuly built.
 
 Build the solution.
 
