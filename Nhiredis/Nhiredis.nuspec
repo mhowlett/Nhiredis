@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nhiredis</id>
+    <version>0.8.1</version>
+    <title>Nhiredis</title>
+    <authors>math</authors>
+    <owners>math</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET bindings for the hiredis library.</description>
+    <releaseNotes>Binary search path updated to work with aspnet50 projects.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>redis database</tags>
+  </metadata>
+</package>

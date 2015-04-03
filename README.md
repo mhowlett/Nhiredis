@@ -2,7 +2,7 @@
 
 Nhiredis is a .NET client for Redis. It is a lightweight wrapper around hiredis, the recommend client for C developers. It provides a simple, flexible API.
 
-Nhiredis can be used under both Windows and Linux/Mono.
+Nhiredis can be used under both Windows and Linux/Mono and works with the aspnet50 target. It's available as a package on nuget.org
 
 
 ## Why Nhiredis?
@@ -88,15 +88,13 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 
 ## Development Status
 
-Nhiredis is used by the website http://backrecord.com. The data schema associated with this website
-is large and complex enough that it pushes the boundaries of what is appropriate use of Redis. 
-Nhiredis is given a workout every day. _I personally rely on Nhiredis_.
+Nhiredis is used by the website http://backrecord.com as well as a number of other projects - it is given a workout every day.
 
 Currently, Nhiredis provides a wrapper around the (blocking) redisCommand function only (async 
 functionality is not yet implemented). Of course, RedisCommand can be used to access the full
 array of Redis functionality.
 
-The current version is 0.7.
+The current version is 0.8.1.
 
 
 ## Benchmarks
