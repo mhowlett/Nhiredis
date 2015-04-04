@@ -1,6 +1,6 @@
 ## Introduction
 
-Nhiredis is a .NET client for Redis. It is a lightweight wrapper around hiredis, the recommend client for C developers. It provides a simple, flexible API.
+Nhiredis is a .NET client for Redis. It is a lightweight wrapper around hiredis, the official C client. It provides a simple, flexible API.
 
 Nhiredis can be used under both Windows and Linux/Mono and works with the aspnet50 target. It's available as a package on nuget.org
 
@@ -26,7 +26,7 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is passed as a string value as the first parameter of the RedisCommand function.
 
 
-## Nhiredis Example
+## Example
 
             var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
@@ -111,36 +111,38 @@ Most frequently the two libraries produced almost identical results.
 
 ## Building
 
-You can download the binary files directly, however if you wish to build Nhiredis yourself, here's
+Library files are included in the repository but if you wish to build Nhiredis yourself, here's
 how:
 
 ### Windows
 
-First, obtain hiredis and compile it. Note that antirez/hiredis on github currently does not
-build on Windows. I recommend using my fork (mhowlett/hiredis), which is the version I 
-personally use in conjunction with Nhiredis (note: the compatibility changes are largely
-the work of others, not me).
-
-The solution/project files/binaies were produced by Visual Studio 2012. In visual studio, 
-update the hiredisx project 'include directories' and 'additional dependencies' to point
-to the hiredis source directory and hiredis.lib that you have successfuly built.
-
-Build the solution.
+1. Obtain an [OpenMSTech version of redis](https://github.com/msopentech/redis) which has been
+   modified to compile under Windows.
+2. Compile this in Release mode for both Win32 and x64 targets. It is important to use Release
+   mode so as to link against the runtime libraries that are redistributable.
+3. In Visual Studio, update the hiredisx project 'include directories' and 'additional dependencies'
+   for both Win32 and x64 targets to point to the hiredis source directory and hiredis.lib that 
+   you have successfuly built. You also need to link against Win32_Interop.lib, that was 
+   built by OpenMSTech redis.
+4. The hiredisx project should now build (for both Win32 and x64 targets) creating hiredisx.dll
+   for both targets.
+5. Manually copy these .dlls to the Nhiredis project under x68 and x64. Set the CopyToOutputDirectory
+   property on these files to something other than Do Not Copy.
+6. If you want to use Nhiredis under linux, you'll need to create libhiredisx.so for x86 and x64
+   and add them to the Nhiredis solution as well.
+7. Run the nugetpkg_make.bat script in the Nhiredis project directory.
+8. in the nugetpkg directory this script creates, run NuGet pack.
 
 
 ### Linux
 
 Obtain hiredis and compile it.
 
-There is no makefile to enable .NET libraries to be compiled with mono under linux. You should
-either obtain the binary .dlls directly, compile Nhiredis under Windows and use the .dlls thus
-produced under linux, or write a Makefile yourself... 
+There is no makefile to enable .NET libraries to be compiled with mono under linux. You can compile
+Nhiredis under Windows and use the .dlls thus produced under linux, or write a Makefile yourself... 
 
 edit hiredisx/Makefile to reference hiredis.a you have successfully built.
 build libhiredisx.so but typing "make" in the hiredisx directory.
-
-copy libhiredisx.so into the same directory you will be using Nhiredis.dll from.
-
 
 
 ## Library Components

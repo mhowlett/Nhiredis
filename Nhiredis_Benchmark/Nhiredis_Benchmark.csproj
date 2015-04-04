@@ -93,6 +93,5 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)Debug\hiredisx.dll $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

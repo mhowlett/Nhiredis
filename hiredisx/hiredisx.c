@@ -27,7 +27,7 @@
 #include "hiredisx.h"
 
 #if defined(_MSC_VER)
-#include "config.h"
+//#include "config.h"
 #endif
 
 #include "hiredis.h"
