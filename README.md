@@ -11,22 +11,18 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 
 1. Parameters and return types of the RedisCommand (which you use for everything) can be conveniently coerced into what you need. This is very flexible: 
 
-            c.RedisCommand("SET", "foo", 42);          // parameters of most types are interpreted as a string automatically.
-                                                       //   note: binary parameter are supported using byte[].
-            c.RedisCommand<int>("GET", "foo");         // return value is interpreted as int if possible
-                                                       //   (otherwise exception thrown).
-            c.RedisCommand<int?>("GET", "foo");        // return value will be null if foo does not exist,
-                                                       //   otherwise it will be interpreted as an int.
-            c.RedisCommand("HMSET", "foo", myDict);    // myDict is automatically flattened into
-                                                       //   key1, value1, key2, value2 ...
-            c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo") 
-                                                       // return value is interpreted as a dictionary.  
+            c.RedisCommand("SET", "foo", 42);
+            c.RedisCommand<int>("GET", "foo");
+            c.RedisCommand<int?>("GET", "foo");
+            c.RedisCommand("HMSET", "foo", myDict);
+	    // note: myDict is automatically flattened into
+	    // key1, value1, key2, value2, ... 
+            c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo");
+	    
+2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is just passed as the first parameter of the RedisCommand function.
 
 
-2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is passed as a string value as the first parameter of the RedisCommand function.
-
-
-## Example
+## Lonegr Example
 
             var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
