@@ -15,8 +15,8 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
             c.RedisCommand<int>("GET", "foo");
             c.RedisCommand<int?>("GET", "foo");
             c.RedisCommand("HMSET", "foo", myDict);
-	    // note: myDict is automatically flattened into
-	    // key1, value1, key2, value2, ... 
+            // note: myDict is automatically flattened into
+            // key1, value1, key2, value2, ... 
             c.RedisCommand<Dictionary<string, string>>("HGETALL", "foo");
 	    
 2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is just passed as the first parameter of the RedisCommand function.

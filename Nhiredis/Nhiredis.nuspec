@@ -6,6 +6,7 @@
     <title>Nhiredis</title>
     <authors>math</authors>
     <owners>math</owners>
+    <projectUrl>https://github.com/mhowlett/Nhiredis</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET bindings for the Redis C client Hiredis.</description>
     <releaseNotes>Recent additions: Binary search path updated so everything works automatically in aspnet50 projects. On Windows now uses hiredis from the MSOpenTech redis v2.18. Refactoring hiredisx and RedisClient. Increased the variety of .NET types that results can be coerced into and out of.</releaseNotes>
