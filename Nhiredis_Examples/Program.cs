@@ -63,7 +63,6 @@ namespace Nhiredis_Examples
             {
                 Console.WriteLine("Command status: " + execResult[0]);
             }
-
         }
     }
 }

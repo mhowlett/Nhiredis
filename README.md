@@ -94,44 +94,40 @@ Currently, Nhiredis provides a wrapper around the (blocking) redisCommand functi
 functionality is not yet implemented). Of course, RedisCommand can be used to access the full
 array of Redis functionality.
 
-The current version is 0.8.1.
+The current version is 0.9.0.
 
 
 ## Benchmarks
 
 The distribution includes a simple benchmark utility that repeatedly sets, gets and deletes keys in a 
 redis database using Nhiredis and ServiceStack.Redis. On my Windows laptop, this utility suggests that 
-the performance of Nhiredis is approximately the same as ServiceStack.Redis (or possibly a bit faster) 
-and consumes approximately 5-10% less memory.
-
-I found the performance results to vary by up to 20% depending on the state of my machine. Sometimes I
-saw Nhiredis beat ServiceStack.Redis by 20%, sometimes, though more rarely, it was the other way around.
-Most frequently the two libraries produced almost identical results.
+the performance of Nhiredis is approximately the same as ServiceStack.Redis.
 
 
 ## Building
 
-Library files are included in the repository but if you wish to build Nhiredis yourself, here's
-how:
+Library files are included in the repository but if you wish to build Nhiredis yourself, here's how:
 
 ### Windows
 
 1. Obtain an [OpenMSTech version of redis](https://github.com/msopentech/redis) which has been
    modified to compile under Windows.
-2. Compile this in Release mode for both Win32 and x64 targets. It is important to use Release
+2. In this project, set Config Properties / C/C++ / Code Generation / Struct Member Alignment 
+   to 1 Byte for both Win32 and x64 targets for the hiredis and Win32_Interop projects.
+3. Compile in Release mode for both Win32 and x64 targets. It is important to use Release
    mode so as to link against the runtime libraries that are redistributable.
-3. In Visual Studio, update the hiredisx project 'include directories' and 'additional dependencies'
+4. In Visual Studio, update the hiredisx project 'include directories' and 'additional dependencies'
    for both Win32 and x64 targets to point to the hiredis source directory and hiredis.lib that 
    you have successfuly built. You also need to link against Win32_Interop.lib, that was 
    built by OpenMSTech redis.
-4. The hiredisx project should now build (for both Win32 and x64 targets) creating hiredisx.dll
+5. The hiredisx project should now build (for both Win32 and x64 targets) creating hiredisx.dll
    for both targets.
-5. Manually copy these .dlls to the Nhiredis project under x68 and x64. Set the CopyToOutputDirectory
+6. Manually copy these .dlls to the Nhiredis project under x68 and x64. Set the CopyToOutputDirectory
    property on these files to something other than Do Not Copy.
-6. If you want to use Nhiredis under linux, you'll need to create libhiredisx.so for x86 and x64
+7. If you want to use Nhiredis under linux, you'll need to create libhiredisx.so for x86 and x64
    and add them to the Nhiredis solution as well.
-7. Run the nugetpkg_make.bat script in the Nhiredis project directory.
-8. in the nugetpkg directory this script creates, run NuGet pack.
+8. Run the nugetpkg_make.bat script in the Nhiredis project directory.
+9. in the nugetpkg directory this script creates, run NuGet pack.
 
 
 ### Linux

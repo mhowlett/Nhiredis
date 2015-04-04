@@ -32,14 +32,13 @@ using System.Runtime.InteropServices;
 
 namespace Nhiredis
 {
-
-        /// <summary>
-        /// This class can allow platforms to provide a custom method for loading the nanomsg library.
-        /// 
-        /// This uses the convention of a library being in:
-        ///   Win32 - [architecture]/module.dll
-        ///   Posix - [architecture]/libmodule.so
-        /// </summary>
+    /// <summary>
+    /// This class can allow platforms to provide a custom method for loading the nanomsg library.
+    /// 
+    /// This uses the convention of a library being in:
+    ///   Win32 - [architecture]/module.dll
+    ///   Posix - [architecture]/libmodule.so
+    /// </summary>
     public static class LibraryLoader
     {
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
@@ -276,6 +275,5 @@ namespace Nhiredis
             byte[] argument,
             int len);
         public static setArgumentX_delegate setArgumentX;
-
     }
 }

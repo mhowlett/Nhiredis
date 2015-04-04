@@ -34,6 +34,13 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
+
+//#define DEBUGVERBOSE
+
+#ifdef DEBUGVERBOSE
+#include <stdio.h>
+#endif
 
 HIREDISX_API
 void* redisConnectWithTimeoutX(
@@ -43,6 +50,9 @@ void* redisConnectWithTimeoutX(
 		int timeout_seconds, 
 		int timeout_microseconds)
 {
+#ifdef DEBUGVERBOSE
+	printf("redisConnectWithTimeoutX:\n");
+#endif
 	redisContext *c;
 	struct timeval tv;
 	int i;
@@ -50,6 +60,12 @@ void* redisConnectWithTimeoutX(
 	char *ipStr = (char *)malloc((ipLen + 1) * sizeof(char *));
 	for (i = 0; i<ipLen; ++i) { ipStr[i] = ip[i]; }
 	ipStr[ipLen] = '\0';
+#ifdef DEBUGVERBOSE
+	printf(" ip: %s\n", ipStr);
+	printf(" timeout_seconds: %d\n", timeout_seconds);
+	printf(" timeout_microseconds: %d\n", timeout_microseconds);
+	printf(" port: %d\n", port);
+#endif
 
 	tv.tv_sec = timeout_seconds;
 	tv.tv_usec = timeout_microseconds;
@@ -79,7 +95,11 @@ void redisCommandX(
 		int *elements,
 		void **reply)
 {
-    redisReply *r;
+#ifdef DEBUGVERBOSE
+	printf("redisCommandX:\n");
+#endif
+
+    redisReply *r = NULL;
 	int i;
 	char **argv = (char **)args;
 
@@ -88,6 +108,9 @@ void redisCommandX(
 	{
 		argvlen[i] = *((int *)argv[i]);
 		argv[i] = (char *)(((int *)argv[i]) + 1);
+#ifdef DEBUGVERBOSE
+		printf(" parameter #%d: len=%d, val=(%s)\n", i, argvlen[i], argv[i]);
+#endif
 	}
 
 	r = (redisReply *)redisCommandArgv((redisContext *)context, argc, (const char **)argv, argvlen);
@@ -110,27 +133,42 @@ void redisCommandX(
 	*elements = 0;
 	*reply = NULL;
 
+#ifdef DEBUGVERBOSE
+	printf(" r->type: %d\n", r->type);
+	printf(" r->integer: %d\n", r->integer);
+	printf(" r->len: %d\n", r->len);
+	printf(" r->str (addr): %d\n", r->str);
+	if (r->len > 0 && r->type == REDIS_REPLY_STRING)
+	{
+		printf(" reply->str = %s\n", r->str);
+	}
+#endif
+
+	// for these 4 cases, don't free the reply - still need it to get info out of.
+
 	if (r->type == REDIS_REPLY_STRING || r->type == REDIS_REPLY_ERROR || r->type == REDIS_REPLY_STATUS)
 	{
-		if (r->len <= strBufLen)
-		{
-			for (i=0; i<r->len; ++i) {strBuf[i] = r->str[i];}
-		}
-		else
-		{
-			*reply = r;
-			return; // don't free reply yet.
-		}
+		*reply = r;
+		return;
 	}
 
 	if (r->type == REDIS_REPLY_ARRAY)
 	{
 		*elements = r->elements;
 		*reply = r;
-		return; // don't free reply yet.
+		return; 
 	}
 
-	freeReplyObject(r);
+	// for these cases, we're done with the reply already.
+
+	if (r->type == REDIS_REPLY_NIL || r->type == REDIS_REPLY_INTEGER)
+	{
+		freeReplyObject(r);
+		return;
+	}
+
+	// unknown reply type.
+	assert(0);
 }
 
 HIREDISX_API
@@ -156,7 +194,10 @@ void retrieveElementX(
 	{
 		if (r->element[index]->len <= strBufLen)
 		{
-			for (i=0; i<*len; ++i) {strBuf[i] = r->element[index]->str[i];}
+			for (i=0; i<*len; ++i)
+			{
+				strBuf[i] = r->element[index]->str[i];
+			}
 		}
 		else
 		{
@@ -177,8 +218,22 @@ void retrieveStringAndFreeReplyObjectX(
 		void *reply, 
 		char *toStrPtr)
 {
+#ifdef DEBUGVERBOSE
+	printf("retrieveStringAndFreeReplyObjectX:\n");
+	printf(" reply->len = %d\n", ((redisReply *)reply)->len);
+	printf(" reply->str = ");
+#endif
 	int i;
-	for (i=0; i<((redisReply *)reply)->len; ++i) { toStrPtr[i] = ((redisReply *)reply)->str[i]; }
+	for (i=0; i<((redisReply *)reply)->len; ++i)
+	{
+#ifdef DEBUGVERBOSE
+		printf("%c", ((redisReply *)reply)->str[i]);
+#endif
+		toStrPtr[i] = ((redisReply *)reply)->str[i];
+	}
+#ifdef DEBUGVERBOSE
+	printf("\n");
+#endif
 	freeReplyObject((redisReply *)reply);
 }
 
@@ -190,7 +245,9 @@ void retrieveElementStringX(
 {
 	int i;
 	for (i=0; i<((redisReply *)reply)->element[index]->len; ++i)
-	  {toStrPtr[i] = ((redisReply *)reply)->element[index]->str[i];}
+	{
+		toStrPtr[i] = ((redisReply *)reply)->element[index]->str[i];
+	}
 }
 
 HIREDISX_API
@@ -210,8 +267,11 @@ void setArgumentX(
 {
 	int i;
 	char **args = (char **)arguments;
-	args[index] = (char *)malloc(sizeof(int) + len * sizeof(char));
-	for (i = 0; i<len; ++i)
-	  { ((char *)(args[index] + sizeof(int)))[i] = ((char *)argument)[i]; }
+	args[index] = (char *)malloc(sizeof(int) + 1 + len * sizeof(char));
+	for (i = 0; i<len; ++i) 
+	{
+		((char *)(args[index] + sizeof(int)))[i] = ((char *)argument)[i];
+	}
+	((char *)(args[index] + sizeof(int)))[len] = '\0'; // unnecessary for redis. useful for debug verbose printf's.
 	*((int *)args[index]) = len;
 }

@@ -7,7 +7,7 @@ namespace Nhiredis
     {
         public static object ConstructDictionary(List<string> values, Type typeHint)
         {
-            // there is probably a good general way of doing this,
+            // there is a good general way of doing this for sure,
             // but I'm in a rush :-)
 
             int count = values.Count % 2 == 0 ? values.Count : values.Count - 1;
@@ -52,12 +52,32 @@ namespace Nhiredis
                 return result;
             }
 
+            if (typeHint == typeof(Dictionary<int, string>))
+            {
+                var result = new Dictionary<int, string>();
+                for (int i = 0; i < count; i += 2)
+                {
+                    result.Add(int.Parse(values[i + 1]), values[i]);
+                }
+                return result;
+            }
+
             if (typeHint == typeof(Dictionary<long, int>))
             {
                 var result = new Dictionary<long, int>();
                 for (int i = 0; i < count; i += 2)
                 {
                     result.Add(long.Parse(values[i]), int.Parse(values[i + 1]));
+                }
+                return result;
+            }
+
+            if (typeHint == typeof(Dictionary<int, long>))
+            {
+                var result = new Dictionary<int, long>();
+                for (int i = 0; i < count; i += 2)
+                {
+                    result.Add(int.Parse(values[i]), long.Parse(values[i + 1]));
                 }
                 return result;
             }

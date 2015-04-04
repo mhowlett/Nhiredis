@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>Nhiredis</id>
-    <version>0.8.1</version>
+    <version>0.9.0</version>
     <title>Nhiredis</title>
     <authors>math</authors>
     <owners>math</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET bindings for the Redis C client Hiredis.</description>
-    <releaseNotes>Binary search path updated to work with aspnet50 projects.</releaseNotes>
+    <releaseNotes>Recent additions: Binary search path updated so everything works automatically in aspnet50 projects. On Windows now uses hiredis from the MSOpenTech redis v2.18. Refactoring hiredisx and RedisClient. Increased the variety of .NET types that results can be coerced into and out of.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>redis database</tags>
   </metadata>
