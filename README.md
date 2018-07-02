@@ -22,7 +22,7 @@ I built Nhiredis because it provides the API I would most like to use. Highlight
 2. You don't need to learn one set of commands for the C# client and another for the CLI - the redis command name is just passed as the first parameter of the RedisCommand function.
 
 
-## Lonegr Example
+## Longer Example
 
             var c = new RedisClient("localhost", 6379, TimeSpan.FromSeconds(2));
 
